@@ -26,8 +26,8 @@ public class GameScreen implements Screen {
 
     public final List<Entity> entities = new ArrayList<>();
     private float time;
-    private OrthographicCamera camera;
-    private Player player;
+    private final OrthographicCamera camera;
+    private final Player player;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
