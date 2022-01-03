@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 
     public final static TextureAtlas atlas;
 
-    public List<Entity> entities;
+    public final List<Entity> entities = new ArrayList<>();
     private float time;
 
     static {
@@ -33,7 +33,6 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
-        entities = new ArrayList<>();
         entities.add(new Player(new Vector2(200, 200)));
     }
 
