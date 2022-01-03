@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 
@@ -33,7 +34,7 @@ public class GameScreen implements Screen {
 
     public GameScreen() {
         entities = new ArrayList<>();
-        entities.add(new Player(new Vector2(0, 0)));
+        entities.add(new Player(new Vector2(200, 200)));
     }
 
     @Override
@@ -50,6 +51,7 @@ public class GameScreen implements Screen {
             time -= SPF;
         }
 
+        ScreenUtils.clear(0.7f, 1.0f, 0.5f, 1.0f);
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
         for (Entity entity : entities) {
