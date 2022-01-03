@@ -4,6 +4,9 @@ import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
 
+    public final static float FPS = 240f;
+    public final static float SPF = 1f/FPS;
+
     @Override
     public void show() {
 
