@@ -15,7 +15,7 @@ public class Player implements Entity {
 
     @Override
     public void tick() {
-        Vector2 acceleration = new Vector2(0, -1);
+        Vector2 acceleration = new Vector2(2, 1);
 
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
