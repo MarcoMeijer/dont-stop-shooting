@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
 
     public final static TextureAtlas atlas;
 
-    public List<Entity> entities;
+    public final List<Entity> entities = new ArrayList<>();
     private float time;
     private OrthographicCamera camera;
     private Player player;
