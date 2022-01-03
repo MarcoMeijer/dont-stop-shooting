@@ -2,6 +2,8 @@ package com.dontstopshooting.dontstopshooting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
@@ -24,6 +26,8 @@ public class GameScreen implements Screen {
 
     public List<Entity> entities;
     private float time;
+    private OrthographicCamera camera;
+    private Player player;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -33,8 +37,21 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
+        player = new Player(new Vector2(0.0f, 0.0f));
+
         entities = new ArrayList<>();
-        entities.add(new Player(new Vector2(200, 200)));
+        entities.add(player);
+
+        camera = new OrthographicCamera();
+
+        // center camera to player
+        camera.zoom = 1.0f;
+        camera.setToOrtho(false);
+        camera.translate(-Gdx.graphics.getWidth()/2.0f, -Gdx.graphics.getHeight()/2.0f);
+        camera.translate(player.location);
+        camera.zoom = 1.0f/4.0f;
+        camera.update();
+
     }
 
     @Override
@@ -53,6 +70,7 @@ public class GameScreen implements Screen {
 
         ScreenUtils.clear(0.7f, 1.0f, 0.5f, 1.0f);
         SpriteBatch batch = new SpriteBatch();
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (Entity entity : entities) {
             entity.render(batch);

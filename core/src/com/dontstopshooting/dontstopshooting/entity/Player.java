@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public class Player implements Entity {
-    private final Vector2 location;
+    public final Vector2 location;
     private final Vector2 velocity = new Vector2();
 
     public Player(Vector2 loc) {
@@ -27,6 +27,6 @@ public class Player implements Entity {
     @Override
     public void render(SpriteBatch batch) {
         TextureRegion region = GameScreen.atlas.findRegion("player");
-        batch.draw(region, location.x, location.y, 64, 64);
+        batch.draw(region, location.x, location.y, 16, 16);
     }
 }
