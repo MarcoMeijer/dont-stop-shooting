@@ -1,5 +1,7 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
@@ -23,7 +25,8 @@ public class Player implements Entity {
     }
 
     @Override
-    public void render() {
-
+    public void render(SpriteBatch batch) {
+        TextureRegion region = GameScreen.atlas.findRegion("player");
+        batch.draw(region, location.x, location.y);
     }
 }
