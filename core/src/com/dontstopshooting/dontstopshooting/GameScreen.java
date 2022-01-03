@@ -39,7 +39,6 @@ public class GameScreen implements Screen {
     public GameScreen() {
         player = new Player(new Vector2(0.0f, 0.0f));
 
-        entities = new ArrayList<>();
         entities.add(player);
 
         camera = new OrthographicCamera();
