@@ -37,10 +37,6 @@ public class Player implements Entity {
 
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
-        if (dv.x != 0.0) {
-            System.out.println(dv.x);
-            System.out.println(dx.x);
-        }
 
         // move in x direction
         location.add(dx.x , 0);
