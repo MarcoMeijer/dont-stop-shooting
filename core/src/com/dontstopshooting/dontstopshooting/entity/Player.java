@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
-import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends Entity {
     public static final float bulletPushAcc = 30;

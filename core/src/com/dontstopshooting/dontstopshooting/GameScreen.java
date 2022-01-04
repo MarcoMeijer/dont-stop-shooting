@@ -1,27 +1,23 @@
 package com.dontstopshooting.dontstopshooting;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
-import jdk.internal.net.http.hpack.HPACK;
 
 import java.util.ArrayList;
 import java.util.List;
