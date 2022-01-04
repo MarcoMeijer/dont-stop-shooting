@@ -11,17 +11,29 @@ import java.util.List;
 public class ParticleHandler {
 
     private final ParticleEffectPool explosionPool;
+    private final ParticleEffectPool gunPool;
     private final List<ParticleEffectPool.PooledEffect> effects = new ArrayList<>();
 
     public ParticleHandler() {
         ParticleEffect explosionEffect = new ParticleEffect();
         explosionEffect.load(Gdx.files.internal("explosion"), GameScreen.atlas);
         explosionEffect.setEmittersCleanUpBlendFunction(false);
-        explosionPool = new ParticleEffectPool(explosionEffect, 1, 200);
+        explosionPool = new ParticleEffectPool(explosionEffect, 1, 100);
+
+        ParticleEffect gunEffect = new ParticleEffect();
+        gunEffect.load(Gdx.files.internal("gun"), GameScreen.atlas);
+        gunEffect.setEmittersCleanUpBlendFunction(false);
+        gunPool = new ParticleEffectPool(gunEffect, 1, 100);
     }
 
     public void createExplosion(float x, float y) {
         ParticleEffectPool.PooledEffect effect = explosionPool.obtain();
+        effect.setPosition(x, y);
+        effects.add(effect);
+    }
+
+    public void createGunExplosion(float x, float y) {
+        ParticleEffectPool.PooledEffect effect = gunPool.obtain();
         effect.setPosition(x, y);
         effects.add(effect);
     }

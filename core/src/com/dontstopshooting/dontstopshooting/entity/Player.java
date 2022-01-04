@@ -9,7 +9,7 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends Entity {
-    public static final float bulletPushAcc = 40;
+    public static final float bulletPushAcc = 30;
     public static final float gravity = 250;
     public static final float friction = 0.97f;
     public static final float bouncyRate = 0.1f;
@@ -33,8 +33,11 @@ public class Player extends Entity {
     }
 
     public void shoot(Vector2 vec) {
-        new PlayerBullet(screen, location.cpy().add(hitBox.width/2f, hitBox.height/2f), vec);
+        Vector2 bulletLocation = location.cpy().add(8, 8);
+        bulletLocation.add(vec.cpy().scl(9f));
+        new PlayerBullet(screen, bulletLocation.cpy(), vec);
         velocity.add(vec.cpy().scl(-bulletPushAcc));
+        GameScreen.particles.createGunExplosion(bulletLocation.x, bulletLocation.y);
     }
 
     @Override
