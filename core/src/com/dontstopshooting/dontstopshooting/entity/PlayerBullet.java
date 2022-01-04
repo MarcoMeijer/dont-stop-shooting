@@ -2,6 +2,7 @@ package com.dontstopshooting.dontstopshooting.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -42,6 +43,7 @@ public class PlayerBullet extends Entity {
 
         if (screen.collisionCheck(this.hitBox)) {
             GameScreen.particles.createBullet(location.x, location.y);
+            screen.mapGenerator.onHit(new GridPoint2((int)location.x/16, (int)location.y/16));
             screen.oldEntities.add(this);
             return;
         }

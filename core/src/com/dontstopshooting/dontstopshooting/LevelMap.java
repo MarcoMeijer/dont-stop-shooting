@@ -8,25 +8,26 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class LevelMap {
 
     public final TiledMap map;
-    private final OrthoCachedTiledMapRenderer renderer;
+    private OrthoCachedTiledMapRenderer renderer;
     private final float offset;
 
     public LevelMap(String levelName, float offset) {
         this.offset = offset;
         map = new TmxMapLoader().load(levelName);
         renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
-        renderer.setBlending(true);
     }
 
     public void render(OrthographicCamera camera) {
         camera.translate(-offset, 0.0f);
         camera.update();
+        renderer.setBlending(true);
         renderer.setView(camera);
         renderer.render();
         camera.translate( offset, 0.0f);
@@ -71,5 +72,35 @@ public class LevelMap {
             }
         }
         return false;
+    }
+
+    public void onHit(GridPoint2 point) {
+        point = point.cpy();
+        point.x -= offset/16;
+
+        for (MapLayer layer : map.getLayers()) {
+            if (!(layer instanceof TiledMapTileLayer))
+                continue;
+
+            TiledMapTileLayer tileLayer = (TiledMapTileLayer) layer;
+
+            TiledMapTileLayer.Cell cell = tileLayer.getCell(point.x, point.y);
+            if (cell == null)
+                continue;
+            TiledMapTile tile = cell.getTile();
+            if (tile == null)
+                continue;
+            MapProperties tileProperties = tile.getProperties();
+            if (tileProperties == null)
+                continue;
+            if (!tileProperties.containsKey("destructible"))
+                continue;
+            boolean destructible = tileProperties.get("destructible", Boolean.class);
+            if (destructible) {
+                tileLayer.setCell(point.x, point.y, new TiledMapTileLayer.Cell());
+                renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
+                GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);
+            }
+        }
     }
 }
