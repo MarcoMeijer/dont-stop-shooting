@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
 
     public final List<Entity> entities = new ArrayList<>();
     public final List<Entity> newEntities = new ArrayList<>();
+    public final List<Entity> oldEntities = new ArrayList<>();
     private float time;
     private long tick = 0;
     private final OrthographicCamera camera;
@@ -79,7 +80,9 @@ public class GameScreen implements Screen {
                 entity.tick();
             }
             entities.addAll(newEntities);
+            entities.removeAll(oldEntities);
             newEntities.clear();
+            oldEntities.clear();
 
             time -= SPF;
         }
