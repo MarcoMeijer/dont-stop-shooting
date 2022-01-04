@@ -9,13 +9,15 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player implements Entity {
-    public static final float bulletPushAcc = 100;
+    public static final float bulletPushAcc = 40;
+    public static final float gravity = 150;
 
     public final Vector2 location;
     private final Vector2 velocity = new Vector2();
     private final Vector2 acceleration = new Vector2();
     private final GameScreen screen;
     private final HitBox hitBox;
+    private float rpm = 4;
 
     public Player(GameScreen screen, Vector2 loc) {
         location = loc;
@@ -25,14 +27,14 @@ public class Player implements Entity {
     }
 
     public void shoot(Vector2 vec) {
-        screen.newEntities.add(new PlayerBullet(location.cpy(), vec));
+        new PlayerBullet(screen, location.cpy().add(hitBox.width/2f, hitBox.height/2f), vec);
         velocity.add(vec.cpy().scl(-bulletPushAcc));
     }
 
     @Override
     public void tick() {
-        acceleration.set(0, -150);
-        if (screen.getTick() % (GameScreen.FPS/4) == 0) {
+        acceleration.set(0, -gravity);
+        if (screen.getTick() % (GameScreen.FPS/rpm) == 0) {
             shoot(new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor());
         }
         velocity.scl(0.99f);
