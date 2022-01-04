@@ -100,6 +100,7 @@ public class LevelMap {
                 tileLayer.setCell(point.x, point.y, new TiledMapTileLayer.Cell());
                 renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
                 GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);
+                GameScreen.particles.createWood(offset + point.x*16.0f, point.y*16.0f);
             }
         }
     }

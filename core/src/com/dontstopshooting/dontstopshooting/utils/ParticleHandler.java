@@ -8,46 +8,50 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ParticleHandler {
 
-    private final ParticleEffectPool explosionPool;
-    private final ParticleEffectPool gunPool;
-    private final ParticleEffectPool bulletPool;
+    private final Map<String, ParticleEffectPool> pools = new HashMap<>();
     private final List<ParticleEffectPool.PooledEffect> effects = new ArrayList<>();
 
     public ParticleHandler() {
-        ParticleEffect explosionEffect = new ParticleEffect();
-        explosionEffect.load(Gdx.files.internal("explosion"), GameScreen.atlas);
-        explosionEffect.setEmittersCleanUpBlendFunction(false);
-        explosionPool = new ParticleEffectPool(explosionEffect, 1, 100);
+        createPool("explosion");
+        createPool("gun");
+        createPool("bullet");
+        createPool("wood");
+    }
 
-        ParticleEffect gunEffect = new ParticleEffect();
-        gunEffect.load(Gdx.files.internal("gun"), GameScreen.atlas);
-        gunEffect.setEmittersCleanUpBlendFunction(false);
-        gunPool = new ParticleEffectPool(gunEffect, 1, 100);
-
-        ParticleEffect bulletEffect = new ParticleEffect();
-        bulletEffect.load(Gdx.files.internal("bullet"), GameScreen.atlas);
-        bulletEffect.setEmittersCleanUpBlendFunction(false);
-        bulletPool = new ParticleEffectPool(bulletEffect, 1, 100);
+    public void createPool(String name) {
+        ParticleEffect effect = new ParticleEffect();
+        effect.load(Gdx.files.internal(name), GameScreen.atlas);
+        effect.setEmittersCleanUpBlendFunction(false);
+        ParticleEffectPool pool = new ParticleEffectPool(effect, 1, 100);
+        pools.put(name, pool);
     }
 
     public void createExplosion(float x, float y) {
-        ParticleEffectPool.PooledEffect effect = explosionPool.obtain();
+        ParticleEffectPool.PooledEffect effect = pools.get("explosion").obtain();
         effect.setPosition(x, y);
         effects.add(effect);
     }
 
     public void createGunExplosion(float x, float y) {
-        ParticleEffectPool.PooledEffect effect = gunPool.obtain();
+        ParticleEffectPool.PooledEffect effect = pools.get("gun").obtain();
         effect.setPosition(x, y);
         effects.add(effect);
     }
 
     public void createBullet(float x, float y) {
-        ParticleEffectPool.PooledEffect effect = bulletPool.obtain();
+        ParticleEffectPool.PooledEffect effect = pools.get("bullet").obtain();
+        effect.setPosition(x, y);
+        effects.add(effect);
+    }
+
+    public void createWood(float x, float y) {
+        ParticleEffectPool.PooledEffect effect = pools.get("wood").obtain();
         effect.setPosition(x, y);
         effects.add(effect);
     }
