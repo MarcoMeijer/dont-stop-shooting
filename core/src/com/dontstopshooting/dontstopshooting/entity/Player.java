@@ -18,6 +18,7 @@ public class Player implements Entity {
     private final GameScreen screen;
     private final HitBox hitBox;
     private float rpm = 4;
+    private Vector2 cursor = Vector2.Zero;
 
     public Player(GameScreen screen, Vector2 loc) {
         location = loc;
@@ -35,7 +36,7 @@ public class Player implements Entity {
     public void tick() {
         acceleration.set(0, -gravity);
         if (screen.getTick() % (GameScreen.FPS/rpm) == 0) {
-            shoot(new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor());
+            shoot(cursor);
         }
         velocity.scl(0.99f);
 
@@ -71,7 +72,9 @@ public class Player implements Entity {
 
     @Override
     public void render(SpriteBatch batch) {
+        cursor = new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor();
         TextureRegion region = GameScreen.atlas.findRegion("player");
-        batch.draw(region, (int)location.x, (int)location.y, 16, 16);
+        if (cursor.x>0) batch.draw(region, (int)location.x, (int)location.y, 16, 16);
+        else batch.draw(region, (int)location.x+16, (int)location.y, -16, 16);
     }
 }
