@@ -82,8 +82,6 @@ public class Player implements Entity {
             ang = (int) ((360.0f - angle + 45.0f/2.0f)/45.0f);
         }
 
-        if (ang == 8) ang = 0;
-
         String name = "player" + (ang+1);
         texture = GameScreen.atlas.findRegion(name);
         if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
