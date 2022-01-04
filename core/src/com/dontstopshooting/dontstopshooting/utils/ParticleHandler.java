@@ -1,10 +1,11 @@
-package com.dontstopshooting.dontstopshooting;
+package com.dontstopshooting.dontstopshooting.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dontstopshooting.dontstopshooting.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,10 +14,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
+import com.dontstopshooting.dontstopshooting.utils.ParticleHandler;
+import com.dontstopshooting.dontstopshooting.utils.PlayerCamera;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,8 @@ public class GameScreen implements Screen {
     public final List<Entity> oldEntities = new ArrayList<>();
     private float time;
     private long tick = 0;
-    public final OrthographicCamera camera;
+    public OrthographicCamera camera;
+    private PlayerCamera playerCamera;
     private final OrthographicCamera screenCamera;
     public final Player player;
 
@@ -67,15 +69,16 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
-        player = new Player(this, new Vector2(100.0f, 150.0f));
+        player = new Player(this, new Vector2(200.0f, 150.0f));
 
-        camera = new OrthographicCamera();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, gameWidth, gameHeight, false);
 
         screenCamera = new OrthographicCamera();
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
         mapGenerator = new MapGenerator(this);
+        playerCamera = new PlayerCamera(this, player);
+        camera = playerCamera.camera;
     }
 
     public long getTick() {
@@ -115,15 +118,10 @@ public class GameScreen implements Screen {
         }
 
 
-        // center camera to player
-        camera.setToOrtho(false, gameWidth, gameHeight);
-        camera.translate(-gameWidth/2.0f, -gameHeight/2.0f);
-        camera.translate((int) Math.max(gameWidth/2.0f, player.location.x + player.texture.getRegionWidth()/2f), gameHeight/2.0f);
-        camera.update();
-
         frameBuffer.begin();
         ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1.0f);
 
+        playerCamera.update();
         mapGenerator.render(camera);
 
         // render particles
