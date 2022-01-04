@@ -1,5 +1,6 @@
 package com.dontstopshooting.dontstopshooting;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
@@ -14,11 +15,13 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class LevelMap {
 
+    public final GameScreen screen;
     public final TiledMap map;
     private OrthoCachedTiledMapRenderer renderer;
     private final float offset;
 
-    public LevelMap(String levelName, float offset) {
+    public LevelMap(GameScreen screen, String levelName, float offset) {
+        this.screen = screen;
         this.offset = offset;
         map = new TmxMapLoader().load(levelName);
         renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
@@ -101,6 +104,7 @@ public class LevelMap {
                 renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
                 GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);
                 GameScreen.particles.createWood(offset + point.x*16.0f, point.y*16.0f);
+                screen.playerCamera.shake(1.0f);
             }
         }
     }

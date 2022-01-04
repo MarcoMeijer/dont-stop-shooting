@@ -57,5 +57,6 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
     public void onHit() {
         GameScreen.particles.createExplosion(location.x, location.y);
         screen.oldEntities.add(this);
+        screen.playerCamera.shake(8.0f);
     }
 }

@@ -40,7 +40,7 @@ public class MapGenerator {
 
     public void addLevel(String levelName) {
         float offset = levels.size()*512.0f;
-        LevelMap levelMap = new LevelMap(levelName, offset);
+        LevelMap levelMap = new LevelMap(screen, levelName, offset);
         levels.add(levelMap);
         for (MapLayer layer : levelMap.map.getLayers()) {
             if (!(layer instanceof TiledMapTileLayer))

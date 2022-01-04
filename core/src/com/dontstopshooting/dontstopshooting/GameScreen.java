@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
     private float time;
     private long tick = 0;
     public OrthographicCamera camera;
-    private PlayerCamera playerCamera;
+    public PlayerCamera playerCamera;
     private final OrthographicCamera screenCamera;
     public final Player player;
 
