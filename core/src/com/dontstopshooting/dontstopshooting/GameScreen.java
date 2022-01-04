@@ -1,6 +1,8 @@
 package com.dontstopshooting.dontstopshooting;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -25,9 +27,11 @@ public class GameScreen implements Screen {
 
     public final static float FPS = 240f;
     public final static float SPF = 1f/FPS;
+    public final static int gameWidth = 384;
+    public final static int gameHeight = 216;
 
     private final FrameBuffer frameBuffer;
-    private Viewport viewport;
+    private final Viewport viewport;
     public final static TextureAtlas atlas;
 
     public final List<Entity> entities = new ArrayList<>();
@@ -38,7 +42,7 @@ public class GameScreen implements Screen {
     private final OrthographicCamera camera;
     private final OrthographicCamera screenCamera;
     private final Player player;
-    private LevelMap level;
+    private final LevelMap level;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -62,11 +66,11 @@ public class GameScreen implements Screen {
         level = new LevelMap("level1.tmx");
 
         camera = new OrthographicCamera();
-        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 320, 180, false);
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, gameWidth, gameHeight, false);
 
         screenCamera = new OrthographicCamera();
-        screenCamera.setToOrtho(false, 320, 180);
-        viewport = new FillViewport(320, 180, screenCamera);
+        screenCamera.setToOrtho(false, gameWidth, gameHeight);
+        viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
     }
 
     public long getTick() {
@@ -97,11 +101,19 @@ public class GameScreen implements Screen {
             time -= SPF;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            if (Gdx.graphics.isFullscreen()) {
+                Gdx.graphics.setWindowedMode(1280, 720);
+            } else {
+                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+            }
+        }
+
 
         // center camera to player
-        camera.setToOrtho(false, 320, 180);
-        camera.translate(-160, -90);
-        camera.translate((int) (player.location.x + player.texture.getRegionWidth()/2f), (int) (player.location.y + player.texture.getRegionHeight()/2f));
+        camera.setToOrtho(false, gameWidth, gameHeight);
+        camera.translate(-gameWidth/2.0f, -gameHeight/2.0f);
+        camera.translate((int) (player.location.x + player.texture.getRegionWidth()/2f), gameHeight/2.0f);
         camera.update();
 
         frameBuffer.begin();
@@ -123,7 +135,7 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(screenCamera.combined);
         Texture frameTexture = frameBuffer.getColorBufferTexture();
         frameTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        batch.draw(frameTexture, 0, 180, 320, -180);
+        batch.draw(frameTexture, 0, gameHeight, gameWidth, -gameHeight);
         batch.flush();
         batch.setProjectionMatrix(camera.combined);
         for (Entity entity : entities) {
