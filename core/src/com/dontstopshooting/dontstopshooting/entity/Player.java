@@ -9,7 +9,7 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player implements Entity {
-    public static final float bulletPushAcc = 10;
+    public static final float bulletPushAcc = 100;
 
     public final Vector2 location;
     private final Vector2 velocity = new Vector2();
@@ -25,24 +25,47 @@ public class Player implements Entity {
     }
 
     public void shoot(Vector2 vec) {
-        screen.newEntities.add(new PlayerBullet(location, vec));
-        acceleration.add(vec.cpy().scl(-bulletPushAcc));
+        screen.newEntities.add(new PlayerBullet(location.cpy(), vec.cpy()));
+        velocity.add(vec.cpy().scl(-bulletPushAcc));
     }
 
     @Override
     public void tick() {
-        acceleration.set(0, -15);
+        acceleration.set(0, -150);
         if (screen.getTick() % GameScreen.FPS == 0) shoot(Vector2.X);
-        acceleration.add(velocity.cpy().scl(velocity).scl(0.01f));
+        velocity.scl(0.99f);
 
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
-
-        location.add(dx);
-        if (screen.collisionCheck(hitBox)) {
-            location.add(-dx.x, -dx.y);
-            velocity.set(0, 0);
+        if (dv.x != 0.0) {
+            System.out.println(dv.x);
+            System.out.println(dx.x);
         }
+
+        // move in x direction
+        location.add(dx.x , 0);
+        if (screen.collisionCheck(hitBox)) {
+            location.add(-dx.x, 0);
+            while (!screen.collisionCheck(hitBox)) {
+                location.add(Math.signum(dx.x), 0);
+            }
+            location.add(-Math.signum(dx.x), 0);
+            velocity.x = 0;
+            acceleration.x = 0;
+        }
+
+        // move in y direction
+        location.add(0 , dx.y);
+        if (screen.collisionCheck(hitBox)) {
+            location.add(0, -dx.y);
+            while (!screen.collisionCheck(hitBox)) {
+                location.add(0, Math.signum(dx.y));
+            }
+            location.add(0, -Math.signum(dx.y));
+            velocity.y = 0;
+            acceleration.y = 0;
+        }
+
         velocity.add(dv);
     }
 
