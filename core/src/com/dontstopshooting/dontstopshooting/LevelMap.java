@@ -13,18 +13,24 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class LevelMap {
 
-    private final TiledMap map;
+    public final TiledMap map;
     private final OrthoCachedTiledMapRenderer renderer;
+    private final float offset;
 
-    public LevelMap(String levelName) {
+    public LevelMap(String levelName, float offset) {
+        this.offset = offset;
         map = new TmxMapLoader().load(levelName);
         renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
         renderer.setBlending(true);
     }
 
     public void render(OrthographicCamera camera) {
+        camera.translate(-offset, 0.0f);
+        camera.update();
         renderer.setView(camera);
         renderer.render();
+        camera.translate( offset, 0.0f);
+        camera.update();
     }
 
     public boolean collisionCheck(HitBox hitBox) {
@@ -35,6 +41,7 @@ public class LevelMap {
             TiledMapTileLayer tileLayer = (TiledMapTileLayer) layer;
 
             Vector2 fPos = hitBox.getRealLocation();
+            fPos.x -= offset;
             Vector2 ePos = fPos.cpy().add(hitBox.width, hitBox.height);
             int tileWidth = tileLayer.getTileWidth();
             int tileHeight = tileLayer.getTileHeight();

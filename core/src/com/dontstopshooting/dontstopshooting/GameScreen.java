@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     public final static float SPF = 1f/FPS;
     public final static int gameWidth = 384;
     public final static int gameHeight = 216;
+    public MapGenerator mapGenerator;
 
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
@@ -41,8 +42,7 @@ public class GameScreen implements Screen {
     private long tick = 0;
     public final OrthographicCamera camera;
     private final OrthographicCamera screenCamera;
-    private final Player player;
-    private final LevelMap level;
+    public final Player player;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -68,10 +68,6 @@ public class GameScreen implements Screen {
 
     public GameScreen() {
         player = new Player(this, new Vector2(100.0f, 150.0f));
-        new Bomb(this, new Vector2(400.0f, 32.0f));
-        new Bomb(this, new Vector2(500.0f, 32.0f));
-
-        level = new LevelMap("level1.tmx");
 
         camera = new OrthographicCamera();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, gameWidth, gameHeight, false);
@@ -79,6 +75,7 @@ public class GameScreen implements Screen {
         screenCamera = new OrthographicCamera();
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
+        mapGenerator = new MapGenerator(this);
     }
 
     public long getTick() {
@@ -86,7 +83,7 @@ public class GameScreen implements Screen {
     }
 
     public boolean collisionCheck(HitBox hitBox) {
-        return level.collisionCheck(hitBox);
+        return mapGenerator.collisionCheck(hitBox);
     }
 
     @Override
@@ -127,7 +124,7 @@ public class GameScreen implements Screen {
         frameBuffer.begin();
         ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1.0f);
 
-        level.render(camera);
+        mapGenerator.render(camera);
 
         // render particles
         SpriteBatch batch = new SpriteBatch();

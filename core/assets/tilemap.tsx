@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="tilemap" tilewidth="16" tileheight="16" tilecount="256" columns="16">
+<tileset version="1.5" tiledversion="1.7.2" name="tilemap" tilewidth="16" tileheight="16" tilecount="16384" columns="16">
+ <grid orientation="orthogonal" width="17" height="17"/>
  <image source="tilemap.png" width="256" height="256"/>
  <tile id="0">
   <properties>
@@ -29,6 +30,7 @@
  <tile id="5">
   <properties>
    <property name="collision" type="bool" value="false"/>
+   <property name="entity" value="bomb"/>
   </properties>
  </tile>
  <tile id="6">
