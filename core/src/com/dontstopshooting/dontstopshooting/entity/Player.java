@@ -10,6 +10,8 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 public class Player implements Entity {
     public static final float bulletPushAcc = 100;
     public static final float gravity = 150;
+    public static final float friction = 0.98f;
+    public static final float bouncyRate = 0.1f;
 
     public final Vector2 location;
     private final Vector2 velocity = new Vector2();
@@ -52,6 +54,7 @@ public class Player implements Entity {
                 location.add(Math.signum(dx.x), 0);
             }
             location.add(-Math.signum(dx.x), 0);
+            velocity.y *= friction;
             velocity.x = 0;
             acceleration.x = 0;
         }
@@ -64,7 +67,8 @@ public class Player implements Entity {
                 location.add(0, Math.signum(dx.y));
             }
             location.add(0, -Math.signum(dx.y));
-            velocity.y = 0;
+            velocity.x *= friction;
+            velocity.y *= -bouncyRate;
             acceleration.y = 0;
         }
 
