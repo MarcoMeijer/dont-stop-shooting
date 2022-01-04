@@ -12,6 +12,7 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapGenerator {
 
@@ -72,7 +73,12 @@ public class MapGenerator {
 
     public void render(OrthographicCamera camera) {
         if (screen.player.location.x + 300.0f >= levels.size()*512.0f) {
-            addLevel("level2.tmx");
+            Random random = new Random();
+            int rng = random.nextInt()%2;
+            if (rng == 0)
+                addLevel("level2.tmx");
+            if (rng == 1)
+                addLevel("level3.tmx");
         }
         for (LevelMap level : levels) {
             level.render(camera);
