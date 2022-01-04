@@ -32,7 +32,7 @@ public class Player implements Entity {
     @Override
     public void tick() {
         acceleration.set(0, -150);
-        if (screen.getTick() % GameScreen.FPS == 0) {
+        if (screen.getTick() % (GameScreen.FPS/4) == 0) {
             shoot(new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor());
         }
         velocity.scl(0.99f);
