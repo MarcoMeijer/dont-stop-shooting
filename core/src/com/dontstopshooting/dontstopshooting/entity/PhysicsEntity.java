@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public abstract class PhysicsEntity extends Entity {
-    public static final float gravity = 250;
-    public static final float bouncyRate = 0.1f;
+    public static final float gravity = 175;
+    public static final float bouncyRate = 0.22f;
 
     protected final Vector2 velocity = new Vector2();
     private final Vector2 acceleration = new Vector2(0, -gravity);
@@ -32,14 +32,15 @@ public abstract class PhysicsEntity extends Entity {
         }
 
         // move in y direction
-        location.add(0 , dx.y);
+        location.add(0, dx.y);
         if (screen.collisionCheck(hitBox)) {
             location.add(0, -dx.y);
             while (!screen.collisionCheck(hitBox)) {
                 location.add(0, Math.signum(dx.y));
             }
             location.add(0, -Math.signum(dx.y));
-            velocity.y = (Math.abs(velocity.x)*0.33f + Math.abs(velocity.y)) * -bouncyRate * Math.signum(velocity.y);
+            if (Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
+            else velocity.y = 0;
         }
     }
 }

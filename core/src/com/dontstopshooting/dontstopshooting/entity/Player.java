@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public class Player extends PhysicsEntity {
-    public static final float bulletPushAcc = 30;
+    public static final float bulletPushAcc = 22;
     private float rpm = 960;
 
     private Vector2 cursor = Vector2.X;

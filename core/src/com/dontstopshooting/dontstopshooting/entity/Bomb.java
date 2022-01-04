@@ -7,24 +7,30 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
-public class Bomb extends PhysicsEntity implements BulletHittable {
-    public static final float speed = 60;
+import java.util.Random;
 
-    private final Animation<TextureRegion> sprite;
+public class Bomb extends PhysicsEntity implements BulletHittable {
+    public static final float speed = 20;
+    public static final int randomJump = (int) (7*GameScreen.TPS);
+
+    private final Animation<TextureRegion> walkingAnimation;
+    private final TextureRegion jump;
     private float time = 0;
-    private boolean direction = false;
+    private boolean direction;
 
     public Bomb(GameScreen screen, Vector2 location) {
         super(screen, location);
-        this.hitBox.width = 16.0f;
+        this.hitBox.width = 11.0f;
         this.hitBox.height = 16.0f;
-        this.sprite = new Animation<>(.1f,
+        this.walkingAnimation = new Animation<>(.1f,
                 GameScreen.atlas.findRegion("bomb1"),
                 GameScreen.atlas.findRegion("bomb2"),
                 GameScreen.atlas.findRegion("bomb3"),
                 GameScreen.atlas.findRegion("bomb4")
         );
-        velocity.set(-speed, 0);
+        jump = GameScreen.atlas.findRegion("bombjump");
+        direction = new Random().nextBoolean();
+        velocity.set(direction? speed: -speed, 0);
     }
 
     @Override
@@ -34,12 +40,16 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
             direction = !direction;
             velocity.x = (direction? 1f: -1f) * speed;
         }
+        if (velocity.y != 0) velocity.x *= 0.999f;
+        else velocity.x = (direction? 1f: -1f) * speed;
+        if (Math.abs(velocity.y) == 0 && new Random().nextInt(randomJump) == 1) velocity.y = gravity*0.8f;
     }
 
     @Override
     public void render(SpriteBatch batch) {
         time += Gdx.graphics.getDeltaTime(); // todo modulo
-        batch.draw(sprite.getKeyFrame(time, true), location.x, location.y);
+        if (Math.abs(velocity.y) == 0) batch.draw(walkingAnimation.getKeyFrame(time, true), location.x, location.y);
+        else batch.draw(jump, location.x, location.y);
     }
 
 
