@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="tilemap" tilewidth="16" tileheight="16" tilecount="16384" columns="16">
+<tileset version="1.5" tiledversion="1.7.2" name="tilemap" tilewidth="16" tileheight="16" tilecount="256" columns="16">
  <grid orientation="orthogonal" width="17" height="17"/>
  <image source="tilemap.png" width="256" height="256"/>
  <tile id="0">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="destructable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="1">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="destructable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="2">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="destructable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="3">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="destructable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="4">
@@ -35,7 +39,8 @@
  </tile>
  <tile id="6">
   <properties>
-   <property name="collision" type="bool" value="false"/>
+   <property name="collision" type="bool" value="true"/>
+   <property name="destructible" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="7">
@@ -86,6 +91,7 @@
  <tile id="16">
   <properties>
    <property name="collision" type="bool" value="true"/>
+   <property name="destructable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="17">

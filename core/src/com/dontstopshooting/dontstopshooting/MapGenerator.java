@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -29,6 +30,11 @@ public class MapGenerator {
             if (level.collisionCheck(hitBox))
                 return true;
         return false;
+    }
+
+    public void onHit(GridPoint2 point) {
+        for (LevelMap level : levels)
+            level.onHit(point);
     }
 
     public void addLevel(String levelName) {

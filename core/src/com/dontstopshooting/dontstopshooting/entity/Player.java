@@ -56,7 +56,6 @@ public class Player extends Entity {
                 location.add(Math.signum(dx.x), 0);
             }
             location.add(-Math.signum(dx.x), 0);
-            velocity.y *= friction;
             velocity.x = 0;
         }
 
@@ -70,7 +69,6 @@ public class Player extends Entity {
             location.add(0, -Math.signum(dx.y));
             if (Math.abs(velocity.y) <= bouncyThreshold) velocity.y = 0;
             else velocity.y = (Math.abs(velocity.x)*0.33f + Math.abs(velocity.y)) * -bouncyRate * Math.signum(velocity.y);
-            velocity.x *= friction;
         }
     }
 
