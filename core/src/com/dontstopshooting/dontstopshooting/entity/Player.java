@@ -17,18 +17,15 @@ public class Player extends Entity {
 
     private final Vector2 velocity = new Vector2();
     private final Vector2 acceleration = new Vector2();
-    private final GameScreen screen;
-    private Vector2 cursor = Vector2.Zero;
+    private Vector2 cursor = Vector2.X;
 
     public TextureRegion texture = GameScreen.atlas.findRegion("player");
 
     public Player(GameScreen screen, Vector2 loc) {
-        super(loc);
+        super(screen, loc);
         hitBox.offset.x = 5;
         hitBox.width = 5;
         hitBox.height = 15;
-        screen.entities.add(this);
-        this.screen = screen;
     }
 
     public void shoot(Vector2 vec) {

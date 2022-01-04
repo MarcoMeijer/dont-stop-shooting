@@ -10,15 +10,12 @@ public class PlayerBullet extends Entity {
     public static final float bulletSpeed = 500;
     public static final long maxAge = (long) (GameScreen.FPS * 3);
 
-    private final GameScreen screen;
     private long age = 0;
     private final Vector2 velocity;
     private final TextureRegion sprite;
 
     public PlayerBullet(GameScreen screen, Vector2 location, Vector2 vec) {
-        super(location);
-        screen.newEntities.add(this);
-        this.screen = screen;
+        super(screen, location);
         this.location = location;
         this.velocity = vec.cpy().scl(bulletSpeed);
         this.sprite = GameScreen.atlas.findRegion("bullet");
