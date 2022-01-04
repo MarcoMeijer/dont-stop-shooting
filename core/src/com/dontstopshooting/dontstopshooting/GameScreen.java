@@ -76,13 +76,13 @@ public class GameScreen implements Screen {
         time += delta;
         while (time >= SPF) {
             tick++;
-            for (Entity entity : entities) {
-                entity.tick();
-            }
             entities.addAll(newEntities);
             entities.removeAll(oldEntities);
             newEntities.clear();
             oldEntities.clear();
+            for (Entity entity : entities) {
+                entity.tick();
+            }
 
             time -= SPF;
         }
@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
         camera.zoom = 1.0f;
         camera.setToOrtho(false);
         camera.translate(-Gdx.graphics.getWidth()/2.0f, -Gdx.graphics.getHeight()/2.0f);
-        camera.translate((int) player.location.x, (int) player.location.y);
+        camera.translate((int) (player.location.x + player.hitBox.width/2f), (int) (player.location.y + player.hitBox.height/2f));
         camera.zoom = 1.0f/4.0f;
         camera.update();
 
