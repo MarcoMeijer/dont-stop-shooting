@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     private float time;
     private final OrthographicCamera camera;
     private final Player player;
+    private LevelMap level;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -37,7 +38,7 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
-        player = new Player(new Vector2(0.0f, 0.0f));
+        player = new Player(new Vector2(100.0f, 150.0f));
 
         entities.add(player);
 
@@ -50,6 +51,8 @@ public class GameScreen implements Screen {
         camera.translate(player.location);
         camera.zoom = 1.0f/4.0f;
         camera.update();
+
+        level = new LevelMap("level1.tmx");
 
     }
 
@@ -68,6 +71,10 @@ public class GameScreen implements Screen {
         }
 
         ScreenUtils.clear(0.7f, 1.0f, 0.5f, 1.0f);
+
+        level.render(camera);
+
+        // render entities
         SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();

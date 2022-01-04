@@ -15,7 +15,7 @@ public class Player implements Entity {
 
     @Override
     public void tick() {
-        Vector2 acceleration = new Vector2(0, -10);
+        Vector2 acceleration = new Vector2(0, -20);
 
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
@@ -27,6 +27,6 @@ public class Player implements Entity {
     @Override
     public void render(SpriteBatch batch) {
         TextureRegion region = GameScreen.atlas.findRegion("player");
-        batch.draw(region, location.x, location.y, 16, 16);
+        batch.draw(region, (int)location.x, (int)location.y, 16, 16);
     }
 }
