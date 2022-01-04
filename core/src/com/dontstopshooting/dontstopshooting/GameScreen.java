@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
+import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +39,18 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
-        player = new Player(new Vector2(100.0f, 150.0f));
+        player = new Player(this, new Vector2(100.0f, 150.0f));
 
         entities.add(player);
 
         camera = new OrthographicCamera();
 
-        // center camera to player
-        camera.zoom = 1.0f;
-        camera.setToOrtho(false);
-        camera.translate(-Gdx.graphics.getWidth()/2.0f, -Gdx.graphics.getHeight()/2.0f);
-        camera.translate(player.location);
-        camera.zoom = 1.0f/4.0f;
-        camera.update();
-
         level = new LevelMap("level1.tmx");
 
+    }
+
+    public boolean collisionCheck(HitBox hitBox) {
+        return level.collisionCheck(hitBox);
     }
 
     @Override
@@ -71,6 +68,14 @@ public class GameScreen implements Screen {
         }
 
         ScreenUtils.clear(0.7f, 1.0f, 0.5f, 1.0f);
+
+        // center camera to player
+        camera.zoom = 1.0f;
+        camera.setToOrtho(false);
+        camera.translate(-Gdx.graphics.getWidth()/2.0f, -Gdx.graphics.getHeight()/2.0f);
+        camera.translate(player.location);
+        camera.zoom = 1.0f/4.0f;
+        camera.update();
 
         level.render(camera);
 
