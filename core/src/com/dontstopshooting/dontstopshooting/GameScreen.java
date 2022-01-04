@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
         camera.zoom = 1.0f;
         camera.setToOrtho(false);
         camera.translate(-Gdx.graphics.getWidth()/2.0f, -Gdx.graphics.getHeight()/2.0f);
-        camera.translate((int) (player.location.x + Player.texture.getRegionWidth()/2f), (int) (player.location.y + Player.texture.getRegionHeight()/2f));
+        camera.translate((int) (player.location.x + player.texture.getRegionWidth()/2f), (int) (player.location.y + player.texture.getRegionHeight()/2f));
         camera.zoom = 1.0f/4.0f;
         camera.update();
 

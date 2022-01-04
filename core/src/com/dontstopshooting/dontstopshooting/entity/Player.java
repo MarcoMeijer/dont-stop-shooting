@@ -8,7 +8,7 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player implements Entity {
-    public static final float bulletPushAcc = 40;
+    public static final float bulletPushAcc = 100;
     public static final float gravity = 150;
 
     public final Vector2 location;
@@ -19,7 +19,7 @@ public class Player implements Entity {
     private float rpm = 4;
     private Vector2 cursor = Vector2.Zero;
 
-    public static final TextureRegion texture = GameScreen.atlas.findRegion("player");
+    public TextureRegion texture = GameScreen.atlas.findRegion("player");
 
     public Player(GameScreen screen, Vector2 loc) {
         location = loc;
@@ -39,7 +39,7 @@ public class Player implements Entity {
         if (screen.getTick() % (GameScreen.FPS/rpm) == 0) {
             shoot(cursor);
         }
-        velocity.scl(0.99f);
+        velocity.scl(0.995f);
 
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
@@ -74,7 +74,19 @@ public class Player implements Entity {
     @Override
     public void render(SpriteBatch batch) {
         cursor = new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor();
-        if (cursor.x > 0) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
-        else batch.draw(texture, (int)location.x+ texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
+
+        float angle = (450.0f - cursor.angleDeg())%360.0f;
+
+        int ang = (int) ((angle + 45.0f/2.0f)/45.0f);
+        if (angle > 180.0f) {
+            ang = (int) ((360.0f - angle + 45.0f/2.0f)/45.0f);
+        }
+
+        if (ang == 8) ang = 0;
+
+        String name = "player" + (ang+1);
+        texture = GameScreen.atlas.findRegion(name);
+        if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
+        else batch.draw(texture, (int)location.x+texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
     }
 }
