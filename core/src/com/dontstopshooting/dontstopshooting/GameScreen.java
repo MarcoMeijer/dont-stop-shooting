@@ -34,6 +34,15 @@ public class GameScreen implements Screen {
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
+        packer.pack("player1", new Pixmap(Gdx.files.internal("player1.png")));
+        packer.pack("player2", new Pixmap(Gdx.files.internal("player2.png")));
+        packer.pack("player3", new Pixmap(Gdx.files.internal("player3.png")));
+        packer.pack("player4", new Pixmap(Gdx.files.internal("player4.png")));
+        packer.pack("player5", new Pixmap(Gdx.files.internal("player5.png")));
+        packer.pack("player6", new Pixmap(Gdx.files.internal("player6.png")));
+        packer.pack("player7", new Pixmap(Gdx.files.internal("player7.png")));
+        packer.pack("player8", new Pixmap(Gdx.files.internal("player8.png")));
+        packer.pack("bullet", new Pixmap(Gdx.files.internal("bullet.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
     }
