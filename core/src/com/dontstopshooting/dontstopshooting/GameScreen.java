@@ -26,7 +26,9 @@ public class GameScreen implements Screen {
     public final static TextureAtlas atlas;
 
     public final List<Entity> entities = new ArrayList<>();
+    public final List<Entity> newEntities = new ArrayList<>();
     private float time;
+    private long tick = 0;
     private final OrthographicCamera camera;
     private final Player player;
     private LevelMap level;
@@ -50,12 +52,14 @@ public class GameScreen implements Screen {
     public GameScreen() {
         player = new Player(this, new Vector2(100.0f, 150.0f));
 
-        entities.add(player);
-
         camera = new OrthographicCamera();
 
         level = new LevelMap("level1.tmx");
 
+    }
+
+    public long getTick() {
+        return tick;
     }
 
     public boolean collisionCheck(HitBox hitBox) {
@@ -70,9 +74,13 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         time += delta;
         while (time >= SPF) {
+            tick++;
             for (Entity entity : entities) {
                 entity.tick();
             }
+            entities.addAll(newEntities);
+            newEntities.clear();
+
             time -= SPF;
         }
 
