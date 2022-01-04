@@ -9,6 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1280;
 		config.height = 720;
+		//config.fullscreen = true;
+		config.title = "Don't stop shooting";
 		new LwjglApplication(new MyGame(), config);
 	}
 }
