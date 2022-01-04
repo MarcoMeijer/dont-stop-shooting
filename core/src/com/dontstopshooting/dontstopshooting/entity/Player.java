@@ -80,7 +80,7 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        Vector3 screenCoords = screen.camera.project(new Vector3(location.x + hitBox.width/2.0f, location.y + hitBox.height/2.0f, 0));
+        Vector3 screenCoords = screen.camera.project(new Vector3(location.x + 8, location.y + 8, 0));
         cursor = new Vector2(-screenCoords.x + Gdx.input.getX(), Gdx.graphics.getHeight() - screenCoords.y - Gdx.input.getY()).nor();
 
         float angle = (450.0f - cursor.angleDeg())%360.0f;

@@ -37,6 +37,11 @@ public class PlayerBullet extends Entity {
                 }
             }
         }
+
+        if (screen.collisionCheck(this.hitBox)) {
+            GameScreen.particles.createBullet(location.x, location.y);
+            screen.oldEntities.add(this);
+        }
     }
 
     @Override
