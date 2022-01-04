@@ -1,7 +1,6 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +18,8 @@ public class Player implements Entity {
     public final HitBox hitBox;
     private float rpm = 4;
     private Vector2 cursor = Vector2.Zero;
+
+    public static final TextureRegion texture = GameScreen.atlas.findRegion("player");
 
     public Player(GameScreen screen, Vector2 loc) {
         location = loc;
@@ -73,8 +74,7 @@ public class Player implements Entity {
     @Override
     public void render(SpriteBatch batch) {
         cursor = new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor();
-        TextureRegion region = GameScreen.atlas.findRegion("player");
-        if (cursor.x > 0) batch.draw(region, (int)location.x, (int)location.y, region.getRegionWidth(), region.getRegionHeight());
-        else batch.draw(region, (int)location.x+region.getRegionWidth(), (int)location.y, -region.getRegionWidth(), region.getRegionHeight());
+        if (cursor.x > 0) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
+        else batch.draw(texture, (int)location.x+ texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
     }
 }
