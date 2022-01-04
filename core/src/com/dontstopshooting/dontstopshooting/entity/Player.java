@@ -7,16 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
-public class Player extends Entity {
+public class Player extends PhysicsEntity {
     public static final float bulletPushAcc = 30;
-    public static final float gravity = 250;
-    public static final float friction = 0.97f;
-    public static final float bouncyRate = 0.1f;
-    public static final float bouncyThreshold = 13f;
     private float rpm = 960;
 
-    private final Vector2 velocity = new Vector2();
-    private final Vector2 acceleration = new Vector2();
     private Vector2 cursor = Vector2.X;
 
     public TextureRegion texture = GameScreen.atlas.findRegion("player");
@@ -38,39 +32,10 @@ public class Player extends Entity {
 
     @Override
     public void tick() {
-        acceleration.set(0, -gravity);
-        if (screen.getTick() % ((GameScreen.FPS*60)/rpm) == 0) {
-            shoot(cursor);
-        }
+        super.tick();
         velocity.scl(0.995f);
-
-        Vector2 dv = acceleration.cpy().scl(GameScreen.SPF);
-        Vector2 dx = velocity.cpy().scl(GameScreen.SPF).add(dv.cpy().scl(0.5f * GameScreen.SPF));
-        velocity.add(dv);
-
-        // move in x direction
-        location.add(dx.x , 0);
-        if (screen.collisionCheck(hitBox)) {
-            location.add(-dx.x, 0);
-            while (!screen.collisionCheck(hitBox)) {
-                location.add(Math.signum(dx.x), 0);
-            }
-            location.add(-Math.signum(dx.x), 0);
-            velocity.y *= friction;
-            velocity.x = 0;
-        }
-
-        // move in y direction
-        location.add(0 , dx.y);
-        if (screen.collisionCheck(hitBox)) {
-            location.add(0, -dx.y);
-            while (!screen.collisionCheck(hitBox)) {
-                location.add(0, Math.signum(dx.y));
-            }
-            location.add(0, -Math.signum(dx.y));
-            if (Math.abs(velocity.y) <= bouncyThreshold) velocity.y = 0;
-            else velocity.y = (Math.abs(velocity.x)*0.33f + Math.abs(velocity.y)) * -bouncyRate * Math.signum(velocity.y);
-            velocity.x *= friction;
+        if (screen.getTick() % ((GameScreen.TPS*60)/rpm) == 0) {
+            shoot(cursor);
         }
     }
 

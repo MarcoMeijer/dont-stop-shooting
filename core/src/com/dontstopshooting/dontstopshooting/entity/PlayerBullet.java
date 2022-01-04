@@ -8,7 +8,7 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class PlayerBullet extends Entity {
     public static final float bulletSpeed = 500;
-    public static final long maxAge = (long) (GameScreen.FPS * 3);
+    public static final long maxAge = (long) (GameScreen.TPS * 1.5);
 
     private long age = 0;
     private final Vector2 velocity;
@@ -23,14 +23,19 @@ public class PlayerBullet extends Entity {
 
     @Override
     public void tick() {
-        location.add(velocity.cpy().scl(GameScreen.SPF));
-        if (++age >= maxAge) screen.oldEntities.add(this);
+        location.add(velocity.cpy().scl(GameScreen.SPT));
+        if (++age >= maxAge) {
+            screen.oldEntities.add(this);
+            return;
+        }
 
         for (Entity entity : screen.entities) {
             if (entity instanceof BulletHittable) {
                 if (HitBox.intersect(entity.hitBox, this.hitBox)) {
                     BulletHittable hittable = (BulletHittable) entity;
                     hittable.onHit();
+                    screen.oldEntities.add(this);
+                    return;
                 }
             }
         }
@@ -38,6 +43,7 @@ public class PlayerBullet extends Entity {
         if (screen.collisionCheck(this.hitBox)) {
             GameScreen.particles.createBullet(location.x, location.y);
             screen.oldEntities.add(this);
+            return;
         }
     }
 

@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -24,8 +23,8 @@ import java.util.List;
 
 public class GameScreen implements Screen {
 
-    public final static float FPS = 240f;
-    public final static float SPF = 1f/FPS;
+    public final static float TPS = 240f;
+    public final static float SPT = 1f/TPS;
     public final static int gameWidth = 384;
     public final static int gameHeight = 216;
     public MapGenerator mapGenerator;
@@ -93,7 +92,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         time += delta;
-        while (time >= SPF) {
+        while (time >= SPT) {
             tick++;
             entities.addAll(newEntities);
             entities.removeAll(oldEntities);
@@ -103,7 +102,7 @@ public class GameScreen implements Screen {
                 entity.tick();
             }
 
-            time -= SPF;
+            time -= SPT;
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
@@ -113,7 +112,6 @@ public class GameScreen implements Screen {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             }
         }
-
 
         // center camera to player
         camera.setToOrtho(false, gameWidth, gameHeight);
