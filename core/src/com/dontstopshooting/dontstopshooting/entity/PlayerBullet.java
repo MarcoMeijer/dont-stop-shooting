@@ -4,18 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
-public class PlayerBullet implements Entity {
+public class PlayerBullet extends Entity {
     public static final float bulletSpeed = 500;
     public static final long maxAge = (long) (GameScreen.FPS * 3);
 
     private final GameScreen screen;
     private long age = 0;
-    private final Vector2 location;
     private final Vector2 velocity;
     private final TextureRegion sprite;
 
     public PlayerBullet(GameScreen screen, Vector2 location, Vector2 vec) {
+        super(location);
         screen.newEntities.add(this);
         this.screen = screen;
         this.location = location;
@@ -27,6 +28,15 @@ public class PlayerBullet implements Entity {
     public void tick() {
         location.add(velocity.cpy().scl(GameScreen.SPF));
         if (++age >= maxAge) screen.oldEntities.add(this);
+
+        for (Entity entity : screen.entities) {
+            if (entity instanceof BulletHittable) {
+                if (HitBox.intersect(entity.hitBox, this.hitBox)) {
+                    BulletHittable hittable = (BulletHittable) entity;
+                    hittable.onHit();
+                }
+            }
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,40 +8,39 @@ import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
-public class Player implements Entity {
-    public static final float bulletPushAcc = 100;
+public class Player extends Entity {
+    public static final float bulletPushAcc = 40;
     public static final float gravity = 250;
     public static final float friction = 0.97f;
     public static final float bouncyRate = 0.1f;
     public static final float bouncyThreshold = 13f;
+    private float rpm = 960;
 
-    public final Vector2 location;
     private final Vector2 velocity = new Vector2();
     private final Vector2 acceleration = new Vector2();
     private final GameScreen screen;
-    public final HitBox hitBox;
-    private float rpm = 4;
     private Vector2 cursor = Vector2.Zero;
 
     public TextureRegion texture = GameScreen.atlas.findRegion("player");
 
     public Player(GameScreen screen, Vector2 loc) {
-        location = loc;
+        super(loc);
+        hitBox.offset.x = 5;
+        hitBox.width = 5;
+        hitBox.height = 15;
         screen.entities.add(this);
         this.screen = screen;
-        this.hitBox = new HitBox(location, new Vector2(5, 0), 5, 15);
     }
 
     public void shoot(Vector2 vec) {
         new PlayerBullet(screen, location.cpy().add(hitBox.width/2f, hitBox.height/2f), vec);
         velocity.add(vec.cpy().scl(-bulletPushAcc));
-        GameScreen.particles.createExplosion(location.x, location.y);
     }
 
     @Override
     public void tick() {
         acceleration.set(0, -gravity);
-        if (screen.getTick() % (GameScreen.FPS/rpm) == 0) {
+        if (screen.getTick() % ((GameScreen.FPS*60)/rpm) == 0) {
             shoot(cursor);
         }
         velocity.scl(0.995f);

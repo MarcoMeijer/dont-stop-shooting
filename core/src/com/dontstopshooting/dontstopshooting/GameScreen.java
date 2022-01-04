@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -71,6 +72,8 @@ public class GameScreen implements Screen {
 
     public GameScreen() {
         player = new Player(this, new Vector2(100.0f, 150.0f));
+        new Bomb(this, new Vector2(400.0f, 32.0f));
+        new Bomb(this, new Vector2(500.0f, 32.0f));
 
         level = new LevelMap("level1.tmx");
 
@@ -122,7 +125,7 @@ public class GameScreen implements Screen {
         // center camera to player
         camera.setToOrtho(false, gameWidth, gameHeight);
         camera.translate(-gameWidth/2.0f, -gameHeight/2.0f);
-        camera.translate((int) (player.location.x + player.texture.getRegionWidth()/2f), gameHeight/2.0f);
+        camera.translate((int) Math.max(gameWidth/2.0f, player.location.x + player.texture.getRegionWidth()/2f), gameHeight/2.0f);
         camera.update();
 
         frameBuffer.begin();
@@ -130,10 +133,11 @@ public class GameScreen implements Screen {
 
         level.render(camera);
 
-        // render entities
+        // render particles
         SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        particles.draw(batch, delta);
         batch.end();
 
         frameBuffer.end();
@@ -150,7 +154,6 @@ public class GameScreen implements Screen {
         for (Entity entity : entities) {
             entity.render(batch);
         }
-        particles.draw(batch, delta);
         batch.end();
     }
 
