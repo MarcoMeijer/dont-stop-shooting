@@ -19,6 +19,7 @@ public class LevelMap {
     public LevelMap(String levelName) {
         map = new TmxMapLoader().load(levelName);
         renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
+        renderer.setBlending(true);
     }
 
     public void render(OrthographicCamera camera) {
