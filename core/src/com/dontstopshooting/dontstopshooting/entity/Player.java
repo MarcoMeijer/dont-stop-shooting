@@ -1,9 +1,11 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
@@ -34,6 +36,7 @@ public class Player implements Entity {
     public void shoot(Vector2 vec) {
         new PlayerBullet(screen, location.cpy().add(hitBox.width/2f, hitBox.height/2f), vec);
         velocity.add(vec.cpy().scl(-bulletPushAcc));
+        GameScreen.particles.createExplosion(location.x, location.y);
     }
 
     @Override
@@ -76,7 +79,8 @@ public class Player implements Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        cursor = new Vector2(-Gdx.graphics.getWidth()/2f + Gdx.input.getX(), Gdx.graphics.getHeight()/2f - Gdx.input.getY()).nor();
+        Vector3 screenCoords = screen.camera.project(new Vector3(location.x + hitBox.width/2.0f, location.y + hitBox.height/2.0f, 0));
+        cursor = new Vector2(-screenCoords.x + Gdx.input.getX(), Gdx.graphics.getHeight() - screenCoords.y - Gdx.input.getY()).nor();
 
         float angle = (450.0f - cursor.angleDeg())%360.0f;
 

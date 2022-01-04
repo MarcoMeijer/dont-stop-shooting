@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
+import jdk.internal.net.http.hpack.HPACK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +35,14 @@ public class GameScreen implements Screen {
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
     public final static TextureAtlas atlas;
+    public final static ParticleHandler particles;
 
     public final List<Entity> entities = new ArrayList<>();
     public final List<Entity> newEntities = new ArrayList<>();
     public final List<Entity> oldEntities = new ArrayList<>();
     private float time;
     private long tick = 0;
-    private final OrthographicCamera camera;
+    public final OrthographicCamera camera;
     private final OrthographicCamera screenCamera;
     private final Player player;
     private final LevelMap level;
@@ -56,8 +59,14 @@ public class GameScreen implements Screen {
         packer.pack("player7", new Pixmap(Gdx.files.internal("player7.png")));
         packer.pack("player8", new Pixmap(Gdx.files.internal("player8.png")));
         packer.pack("bullet", new Pixmap(Gdx.files.internal("bullet.png")));
+        packer.pack("circle", new Pixmap(Gdx.files.internal("circle.png")));
+        packer.pack("bomb1", new Pixmap(Gdx.files.internal("bomb1.png")));
+        packer.pack("bomb2", new Pixmap(Gdx.files.internal("bomb2.png")));
+        packer.pack("bomb3", new Pixmap(Gdx.files.internal("bomb3.png")));
+        packer.pack("bomb4", new Pixmap(Gdx.files.internal("bomb4.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
+        particles = new ParticleHandler();
     }
 
     public GameScreen() {
@@ -117,7 +126,7 @@ public class GameScreen implements Screen {
         camera.update();
 
         frameBuffer.begin();
-        ScreenUtils.clear(0.7f, 1.0f, 0.5f, 1.0f);
+        ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1.0f);
 
         level.render(camera);
 
@@ -141,6 +150,7 @@ public class GameScreen implements Screen {
         for (Entity entity : entities) {
             entity.render(batch);
         }
+        particles.draw(batch, delta);
         batch.end();
     }
 
