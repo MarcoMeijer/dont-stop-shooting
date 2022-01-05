@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
@@ -68,7 +69,12 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
             }
         }
 
-
+        GridPoint2 center = new GridPoint2((int) hitBox.getCenter().x/16, (int) hitBox.getCenter().y/16);
+        for (int dx=-2; dx<=2; dx++) {
+            for (int dy=-2; dy<=2; dy++) {
+                screen.mapGenerator.onHit(center.cpy().add(dx, dy));
+            }
+        }
     }
 
     @Override
