@@ -33,5 +33,6 @@ public class BulletPowerUp extends PhysicsEntity implements PlayerCollidable {
         player.bullets += 25;
         player.score += 1000;
         this.destroy();
+        new TextEntity("1000", screen, location);
     }
 }
