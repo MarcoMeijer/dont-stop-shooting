@@ -74,7 +74,7 @@ public class MapGenerator {
     public void render(OrthographicCamera camera) {
         if (screen.player.location.x + 300.0f >= levels.size()*512.0f) {
             Random random = new Random();
-            int rng = random.nextInt()%2;
+            int rng = random.nextInt(2);
             if (rng == 0)
                 addLevel("level2.tmx");
             if (rng == 1)

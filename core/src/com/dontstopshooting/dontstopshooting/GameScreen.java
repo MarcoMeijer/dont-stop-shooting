@@ -44,6 +44,7 @@ public class GameScreen implements Screen {
     public OrthographicCamera camera;
     public PlayerCamera playerCamera;
     private final OrthographicCamera screenCamera;
+    private final BackgroundScroller backgroundScroller;
     public Player player;
 
     static {
@@ -65,6 +66,9 @@ public class GameScreen implements Screen {
         packer.pack("bomb4", new Pixmap(Gdx.files.internal("bomb4.png")));
         packer.pack("bombjump", new Pixmap(Gdx.files.internal("bombjump.png")));
         packer.pack("plank", new Pixmap(Gdx.files.internal("plank.png")));
+        packer.pack("caves1", new Pixmap(Gdx.files.internal("caves1.png")));
+        packer.pack("caves2", new Pixmap(Gdx.files.internal("caves2.png")));
+        packer.pack("caves3", new Pixmap(Gdx.files.internal("caves3.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
@@ -75,6 +79,7 @@ public class GameScreen implements Screen {
         screenCamera = new OrthographicCamera();
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
+        backgroundScroller = new BackgroundScroller();
         restart();
     }
 
@@ -120,15 +125,20 @@ public class GameScreen implements Screen {
 
 
         frameBuffer.begin();
-        ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1.0f);
+        ScreenUtils.clear(56f/255, 45f/255, 107f/255, 1.0f);
+
+        SpriteBatch batch = new SpriteBatch();
+        batch.begin();
 
         playerCamera.update();
+
+        batch.setProjectionMatrix(screenCamera.combined);
+        backgroundScroller.render(batch, playerCamera.startX);
+
         mapGenerator.render(camera);
 
         // render particles
-        SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
         particles.draw(batch, delta);
         batch.end();
 
