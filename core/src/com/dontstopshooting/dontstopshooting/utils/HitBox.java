@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class HitBox {
+    private static final ShapeRenderer renderer = new ShapeRenderer() {{
+        setColor(Color.RED);
+        begin(ShapeRenderer.ShapeType.Line);
+    }};
+
     public Vector2 loc, offset;
     public float width, height;
 
@@ -18,12 +23,8 @@ public class HitBox {
 
     public void render(SpriteBatch batch) {
         batch.end();
-        ShapeRenderer renderer = new ShapeRenderer();
-        renderer.setColor(Color.RED);
         renderer.setProjectionMatrix(batch.getProjectionMatrix());
-        renderer.begin(ShapeRenderer.ShapeType.Line);
         renderer.rect((int)getRealLocation().x, (int)getRealLocation().y, (int)width, (int)height);
-        renderer.end();
         batch.begin();
     }
 
