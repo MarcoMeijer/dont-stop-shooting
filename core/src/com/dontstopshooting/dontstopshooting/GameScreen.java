@@ -220,7 +220,7 @@ public class GameScreen implements Screen {
 
     public void restart() {
         entities.clear();
-        if (player != null) highScore = player.score;
+        if (player != null && player.score > highScore) highScore = player.score;
         player = new Player(this, new Vector2(200.0f, 150.0f));
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);
