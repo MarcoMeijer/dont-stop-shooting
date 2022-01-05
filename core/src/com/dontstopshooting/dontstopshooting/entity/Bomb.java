@@ -22,7 +22,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
         super(screen, location);
         this.hitBox.width = 11.0f;
         this.hitBox.height = 16.0f;
-        this.walkingAnimation = new Animation<>(.1f,
+        this.walkingAnimation = new Animation<>(.08f,
                 GameScreen.atlas.findRegion("bomb1"),
                 GameScreen.atlas.findRegion("bomb2"),
                 GameScreen.atlas.findRegion("bomb3"),

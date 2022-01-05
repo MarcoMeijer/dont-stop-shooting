@@ -124,16 +124,19 @@ public class GameScreen implements Screen {
         }
 
 
-        frameBuffer.begin();
         ScreenUtils.clear(56f/255, 45f/255, 107f/255, 1.0f);
-
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
 
-        playerCamera.update();
-
         batch.setProjectionMatrix(screenCamera.combined);
         backgroundScroller.render(batch, playerCamera.startX);
+
+        frameBuffer.begin();
+        ScreenUtils.clear(0.0f, 0.0f, 0.0f, 0.0f);
+
+
+        playerCamera.update();
+
 
         mapGenerator.render(camera);
 
@@ -146,7 +149,6 @@ public class GameScreen implements Screen {
 
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.begin();
-        ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1.0f);
         batch.setProjectionMatrix(screenCamera.combined);
         Texture frameTexture = frameBuffer.getColorBufferTexture();
         frameTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);

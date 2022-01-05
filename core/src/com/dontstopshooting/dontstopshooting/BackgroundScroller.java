@@ -20,9 +20,9 @@ public class BackgroundScroller {
     }
 
     private final SingleBackground[] layers = new SingleBackground[] {
-            new SingleBackground("caves1", 0.02f),
+            new SingleBackground("caves1", 0.05f),
             new SingleBackground("caves2", 0.2f),
-            new SingleBackground("caves3", 0.5f),
+            new SingleBackground("caves3", 0.6f),
     };
 
     void render(SpriteBatch batch, float camaraX) {
