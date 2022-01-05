@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Player;
+import com.dontstopshooting.dontstopshooting.ui.GameUi;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 import com.dontstopshooting.dontstopshooting.utils.ParticleHandler;
 import com.dontstopshooting.dontstopshooting.utils.PlayerCamera;
@@ -29,6 +32,7 @@ public class GameScreen implements Screen {
     public final static float SPT = 1f/TPS;
     public final static int gameWidth = 384;
     public final static int gameHeight = 216;
+    public final static Skin skin;
     public MapGenerator mapGenerator;
 
     private final FrameBuffer frameBuffer;
@@ -46,6 +50,7 @@ public class GameScreen implements Screen {
     private final OrthographicCamera screenCamera;
     private final BackgroundScroller backgroundScroller;
     public Player player;
+    public Stage stage;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -74,6 +79,7 @@ public class GameScreen implements Screen {
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
+        skin = new Skin(Gdx.files.internal("skin/skin.json"));
     }
 
     public GameScreen() {
@@ -82,6 +88,8 @@ public class GameScreen implements Screen {
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
         backgroundScroller = new BackgroundScroller();
+        stage = new Stage();
+        stage.addActor(new GameUi(skin));
         restart();
     }
 
@@ -161,6 +169,8 @@ public class GameScreen implements Screen {
             entity.render(batch);
         }
         batch.end();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
