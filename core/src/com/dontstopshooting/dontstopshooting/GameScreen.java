@@ -69,15 +69,10 @@ public class GameScreen implements Screen {
         packer.pack("player8", new Pixmap(Gdx.files.internal("player8.png")));
         packer.pack("bullet", new Pixmap(Gdx.files.internal("bullet.png")));
         packer.pack("circle", new Pixmap(Gdx.files.internal("circle.png")));
-        packer.pack("bat1", new Pixmap(Gdx.files.internal("bat1.png")));
-        packer.pack("bat2", new Pixmap(Gdx.files.internal("bat2.png")));
-        packer.pack("bat3", new Pixmap(Gdx.files.internal("bat3.png")));
-        packer.pack("bat4", new Pixmap(Gdx.files.internal("bat4.png")));
-        packer.pack("bat5", new Pixmap(Gdx.files.internal("bat5.png")));
-        packer.pack("bat6", new Pixmap(Gdx.files.internal("bat6.png")));
-        packer.pack("bat7", new Pixmap(Gdx.files.internal("bat7.png")));
-        packer.pack("bat8", new Pixmap(Gdx.files.internal("bat8.png")));
-        packer.pack("bat9", new Pixmap(Gdx.files.internal("bat9.png")));
+        for (int i=1; i<=9; i++) {
+            packer.pack("bat"+i, new Pixmap(Gdx.files.internal("bat"+i+".png")));
+            packer.pack("batdamage"+i, new Pixmap(Gdx.files.internal("batdamage"+i+".png")));
+        }
         packer.pack("bomb1", new Pixmap(Gdx.files.internal("bomb1.png")));
         packer.pack("bomb2", new Pixmap(Gdx.files.internal("bomb2.png")));
         packer.pack("bomb3", new Pixmap(Gdx.files.internal("bomb3.png")));

@@ -37,6 +37,9 @@ public class Player extends PhysicsEntity implements Explosive {
         GameScreen.particles.createGunExplosion(bulletLocation.x, bulletLocation.y);
         score += 10;
         bullets--;
+        if (bullets == 0) {
+            die();
+        }
     }
 
     @Override
@@ -51,7 +54,6 @@ public class Player extends PhysicsEntity implements Explosive {
             if (entity instanceof PlayerCollidable) {
                 if (HitBox.intersect(this.hitBox, entity.hitBox)) {
                     ((PlayerCollidable) entity).onCollide(this);
-                    score += 100;
                 }
             }
         }

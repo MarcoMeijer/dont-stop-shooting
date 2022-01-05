@@ -31,6 +31,7 @@ public class BulletPowerUp extends PhysicsEntity implements PlayerCollidable {
     @Override
     public void onCollide(Player player) {
         player.bullets += 25;
+        player.score += 1000;
         this.destroy();
     }
 }
