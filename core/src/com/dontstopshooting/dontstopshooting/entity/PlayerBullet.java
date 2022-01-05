@@ -45,7 +45,6 @@ public class PlayerBullet extends Entity {
             GameScreen.particles.createBullet(location.x, location.y);
             screen.mapGenerator.onHit(new GridPoint2((int)location.x/16, (int)location.y/16));
             screen.oldEntities.add(this);
-            return;
         }
     }
 

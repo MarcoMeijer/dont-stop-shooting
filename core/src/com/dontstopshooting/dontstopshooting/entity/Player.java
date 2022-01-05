@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
-public class Player extends PhysicsEntity {
+public class Player extends PhysicsEntity implements Explosive {
     public static final float bulletPushAcc = 22;
     private float rpm = 960;
 
@@ -55,5 +55,10 @@ public class Player extends PhysicsEntity {
         texture = GameScreen.atlas.findRegion(name);
         if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
         else batch.draw(texture, (int)location.x+texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
+    }
+
+    @Override
+    public void onExplode() {
+        System.out.println("player exploded");
     }
 }

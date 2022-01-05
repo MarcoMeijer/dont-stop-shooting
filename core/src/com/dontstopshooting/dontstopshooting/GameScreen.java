@@ -65,6 +65,7 @@ public class GameScreen implements Screen {
         packer.pack("bomb3", new Pixmap(Gdx.files.internal("bomb3.png")));
         packer.pack("bomb4", new Pixmap(Gdx.files.internal("bomb4.png")));
         packer.pack("bombjump", new Pixmap(Gdx.files.internal("bombjump.png")));
+        packer.pack("bombready", new Pixmap(Gdx.files.internal("bombready.png")));
         packer.pack("bombexplode1", new Pixmap(Gdx.files.internal("bombexplode1.png")));
         packer.pack("bombexplode2", new Pixmap(Gdx.files.internal("bombexplode2.png")));
         packer.pack("plank", new Pixmap(Gdx.files.internal("plank.png")));

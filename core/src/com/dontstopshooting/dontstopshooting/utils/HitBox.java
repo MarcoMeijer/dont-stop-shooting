@@ -17,6 +17,10 @@ public class HitBox {
         return loc.cpy().add(offset);
     }
 
+    public Vector2 getCenter() {
+        return getRealLocation().add(width/2f, height/2f);
+    }
+
     public boolean intersect(HitBox other) {
         return ((      getRealLocation().x <= other.getRealLocation().x && other.getRealLocation().x <=       getRealLocation().x + width) ||
                 (other.getRealLocation().x <=       getRealLocation().x &&       getRealLocation().x <= other.getRealLocation().x + width)) &&
