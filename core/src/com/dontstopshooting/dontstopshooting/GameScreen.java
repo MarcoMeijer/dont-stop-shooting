@@ -29,7 +29,7 @@ import java.util.Set;
 public class GameScreen implements Screen {
 
     public final static float TPS = 240f;
-    public final static float SPT = 1f/TPS;
+    public final static float SPT = 1f / TPS;
     public final static int gameWidth = 384;
     public final static int gameHeight = 216;
     public final static Skin skin;
@@ -54,6 +54,7 @@ public class GameScreen implements Screen {
     public Player player;
     public Stage stage;
     public GameUi ui;
+    public int highScore = 0;
 
     static {
         PixmapPacker packer = new PixmapPacker(2048, 2048, Pixmap.Format.RGBA8888, 2, true);
@@ -111,7 +112,7 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
         backgroundScroller = new BackgroundScroller();
         stage = new Stage();
-        ui = new GameUi(skin);
+        ui = new GameUi(skin, this);
         stage.addActor(ui);
         restart();
     }
@@ -156,7 +157,7 @@ public class GameScreen implements Screen {
 
         ui.update();
 
-        ScreenUtils.clear(56f/255, 45f/255, 107f/255, 1.0f);
+        ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
 
@@ -219,6 +220,7 @@ public class GameScreen implements Screen {
 
     public void restart() {
         entities.clear();
+        if (player != null) highScore = player.score;
         player = new Player(this, new Vector2(200.0f, 150.0f));
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);

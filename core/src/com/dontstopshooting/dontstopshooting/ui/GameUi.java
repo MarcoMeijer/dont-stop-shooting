@@ -17,10 +17,13 @@ public class GameUi extends Table {
     public Player player;
     private final Image healthBar;
     private final Label scoreLabel;
+    private final Label highScoreLabel;
+    private final GameScreen screen;
 
-    public GameUi(Skin skin) {
+    public GameUi(Skin skin, GameScreen screen) {
         super(skin);
         this.player = null;
+        this.screen = screen;
 
         this.setFillParent(true);
 
@@ -34,10 +37,15 @@ public class GameUi extends Table {
         scoreLabel.setFontScale(2.0f);
         this.row();
         this.add(scoreLabel).bottom().left().pad(8.0f).expand();
+        // highScore
+        highScoreLabel = new Label("HIGHSCORE: 000.000.000", getSkin());
+        highScoreLabel.setFontScale(2.0f);
+        this.add(highScoreLabel).bottom().right().pad(8.0f).expand();
     }
 
     public void update() {
         this.healthBar.setDrawable(new SpriteDrawable(new Sprite(GameScreen.atlas.findRegion("healthbar"+player.health))));
         scoreLabel.setText(String.format("SCORE: %09d", player.score));
+        highScoreLabel.setText(String.format("HIGHSCORE: %09d", screen.highScore));
     }
 }
