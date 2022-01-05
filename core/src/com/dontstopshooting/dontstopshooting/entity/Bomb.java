@@ -124,7 +124,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
         TextureRegion texture = null;
         switch (state) {
             case FUSING:
-                texture = fusingAnimation.getKeyFrame(Interpolation.pow2OutInverse.apply((maxFuseTime- fuseTimer)/(float)maxFuseTime), true);
+                texture = fusingAnimation.getKeyFrame(Interpolation.pow2OutInverse.apply((maxFuseTime-fuseTimer)/(float)maxFuseTime), true);
                 break;
             case WALKING:
                 if (velocity.y == 0) texture = walkingAnimation.getKeyFrame(time, true);

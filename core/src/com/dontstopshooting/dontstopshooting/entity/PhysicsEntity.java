@@ -8,7 +8,8 @@ public abstract class PhysicsEntity extends Entity {
     public static final float bouncyRate = 0.22f;
 
     protected final Vector2 velocity = new Vector2();
-    private final Vector2 acceleration = new Vector2(0, -gravity);
+    private final Vector2 acceleration = Vector2.Zero;
+    protected boolean hasGravity = true;
 
     public PhysicsEntity(GameScreen screen, Vector2 location) {
         super(screen, location);
@@ -16,6 +17,8 @@ public abstract class PhysicsEntity extends Entity {
 
     @Override
     public void tick() {
+        if (hasGravity) acceleration.set(0, -gravity);
+        else acceleration.setZero();
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPT);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPT).add(dv.cpy().scl(0.5f * GameScreen.SPT));
         velocity.add(dv);
@@ -39,7 +42,7 @@ public abstract class PhysicsEntity extends Entity {
                 location.add(0, Math.signum(dx.y));
             }
             location.add(0, -Math.signum(dx.y));
-            if (Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
+            if (hasGravity && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
             else velocity.y = 0;
         }
     }

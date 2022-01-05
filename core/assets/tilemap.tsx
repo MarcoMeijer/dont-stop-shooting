@@ -117,11 +117,13 @@
  <tile id="21">
   <properties>
    <property name="collision" type="bool" value="false"/>
+   <property name="entity" value="batv"/>
   </properties>
  </tile>
  <tile id="22">
   <properties>
    <property name="collision" type="bool" value="false"/>
+   <property name="entity" value="bath"/>
   </properties>
  </tile>
  <tile id="23">
