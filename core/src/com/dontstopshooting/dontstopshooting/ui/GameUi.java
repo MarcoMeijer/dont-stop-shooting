@@ -12,6 +12,7 @@ public class GameUi extends Table {
         this.setFillParent(true);
 
         Label scoreLabel = new Label("SCORE: 000000", getSkin());
+        scoreLabel.setFontScale(2.0f);
         this.row();
         this.add(scoreLabel).top().left().pad(10.0f).expand();
     }

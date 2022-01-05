@@ -11,7 +11,7 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public class Bat extends PhysicsEntity implements Explosive, BulletHittable {
     public static final float speed = 20;
-    public static final int startHealth = 3;
+    public static final int startHealth = 6;
 
     private final boolean vertical;
     private float direction = 1;
@@ -50,7 +50,6 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable {
     public void tick() {
         super.tick();
 
-        System.out.println(velocity);
         if (velocity.x == 0 && velocity.y == 0) direction *= -1;
 
         if (vertical) velocity.y = direction*speed;

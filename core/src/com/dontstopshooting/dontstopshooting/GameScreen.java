@@ -90,6 +90,9 @@ public class GameScreen implements Screen {
         packer.dispose();
         particles = new ParticleHandler();
         skin = new Skin(Gdx.files.internal("skin/skin.json"));
+        for (Texture texture : skin.getAtlas().getTextures()) {
+            texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        }
     }
 
     public GameScreen() {

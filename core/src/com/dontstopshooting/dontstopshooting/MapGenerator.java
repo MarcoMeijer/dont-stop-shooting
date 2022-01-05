@@ -68,11 +68,11 @@ public class MapGenerator {
                         cell.setTile(null);
                     }
                     if (entityName.equals("batv")) {
-                        new Bat(screen, new Vector2(offset + x*16.0f-4, y*16.0f), true);
+                        new Bat(screen, new Vector2(offset + x*16.0f-4, y*16.0f - 2), true);
                         cell.setTile(null);
                     }
                     if (entityName.equals("bath")) {
-                        new Bat(screen, new Vector2(offset + x*16.0f-4, y*16.0f), false);
+                        new Bat(screen, new Vector2(offset + x*16.0f-4, y*16.0f - 2), false);
                         cell.setTile(null);
                     }
                 }
@@ -83,11 +83,15 @@ public class MapGenerator {
     public void render(OrthographicCamera camera) {
         if (screen.player.location.x + 300.0f >= levels.size()*512.0f) {
             Random random = new Random();
-            int rng = random.nextInt(2);
+            int rng = random.nextInt(4);
             if (rng == 0)
                 addLevel("level2.tmx");
             if (rng == 1)
                 addLevel("level3.tmx");
+            if (rng == 2)
+                addLevel("level4.tmx");
+            if (rng == 3)
+                addLevel("level5.tmx");
         }
         for (LevelMap level : levels) {
             level.render(camera);

@@ -24,26 +24,30 @@ public abstract class PhysicsEntity extends Entity {
         velocity.add(dv);
 
         // move in x direction
-        location.add(dx.x , 0);
-        if (screen.collisionCheck(hitBox)) {
-            location.add(-dx.x, 0);
-            while (!screen.collisionCheck(hitBox)) {
-                location.add(Math.signum(dx.x), 0);
+        if (!screen.collisionCheck(hitBox)) {
+            location.add(dx.x, 0);
+            if (screen.collisionCheck(hitBox)) {
+                location.add(-dx.x, 0);
+                while (!screen.collisionCheck(hitBox)) {
+                    location.add(Math.signum(dx.x), 0);
+                }
+                location.add(-Math.signum(dx.x), 0);
+                velocity.x = 0;
             }
-            location.add(-Math.signum(dx.x), 0);
-            velocity.x = 0;
         }
 
         // move in y direction
-        location.add(0, dx.y);
-        if (screen.collisionCheck(hitBox)) {
-            location.add(0, -dx.y);
-            while (!screen.collisionCheck(hitBox)) {
-                location.add(0, Math.signum(dx.y));
+        if (!screen.collisionCheck(hitBox)) {
+            location.add(0, dx.y);
+            if (screen.collisionCheck(hitBox)) {
+                location.add(0, -dx.y);
+                while (!screen.collisionCheck(hitBox)) {
+                    location.add(0, Math.signum(dx.y));
+                }
+                location.add(0, -Math.signum(dx.y));
+                if (hasGravity && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
+                else velocity.y = 0;
             }
-            location.add(0, -Math.signum(dx.y));
-            if (hasGravity && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
-            else velocity.y = 0;
         }
     }
 }
