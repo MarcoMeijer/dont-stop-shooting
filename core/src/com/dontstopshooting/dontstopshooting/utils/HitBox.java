@@ -1,5 +1,8 @@
 package com.dontstopshooting.dontstopshooting.utils;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class HitBox {
@@ -11,6 +14,17 @@ public class HitBox {
         this.offset = offset;
         this.width = width;
         this.height = height;
+    }
+
+    public void render(SpriteBatch batch) {
+        batch.end();
+        ShapeRenderer renderer = new ShapeRenderer();
+        renderer.setColor(Color.RED);
+        renderer.setProjectionMatrix(batch.getProjectionMatrix());
+        renderer.begin(ShapeRenderer.ShapeType.Line);
+        renderer.rect((int)getRealLocation().x, (int)getRealLocation().y, (int)width, (int)height);
+        renderer.end();
+        batch.begin();
     }
 
     public Vector2 getRealLocation() {

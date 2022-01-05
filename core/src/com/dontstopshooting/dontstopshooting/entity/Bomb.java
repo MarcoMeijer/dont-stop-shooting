@@ -119,7 +119,10 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
 
     @Override
     public void render(SpriteBatch batch) {
+        super.render(batch);
+
         time += Gdx.graphics.getDeltaTime(); // todo modulo
+        int x = (int)location.x, y = (int)location.y;
 
         TextureRegion texture = null;
         switch (state) {
@@ -132,9 +135,11 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
                 break;
             case PRE_JUMP:
                 texture = preJump;
+                --x;
+                break;
         }
 
-        batch.draw(texture, (int)location.x, (int)location.y);
+        batch.draw(texture, x, y);
     }
 
 

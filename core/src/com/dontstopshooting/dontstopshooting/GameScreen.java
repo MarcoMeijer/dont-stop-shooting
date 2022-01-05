@@ -43,6 +43,8 @@ public class GameScreen implements Screen {
     public final Set<Entity> entities = new HashSet<>();
     public final Set<Entity> newEntities = new HashSet<>();
     public final Set<Entity> oldEntities = new HashSet<>();
+
+    public boolean debugMode = false;
     private float time;
     private long tick = 0;
     public OrthographicCamera camera;
@@ -134,18 +136,15 @@ public class GameScreen implements Screen {
             time -= SPT;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F11)) {
             if (Gdx.graphics.isFullscreen()) {
                 Gdx.graphics.setWindowedMode(1280, 720);
             } else {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             }
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            restart();
-        }
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) restart();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) debugMode = !debugMode;
 
         ScreenUtils.clear(56f/255, 45f/255, 107f/255, 1.0f);
         SpriteBatch batch = new SpriteBatch();
@@ -156,7 +155,6 @@ public class GameScreen implements Screen {
 
         frameBuffer.begin();
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 0.0f);
-
 
         playerCamera.update();
 

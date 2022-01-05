@@ -55,6 +55,8 @@ public class Player extends PhysicsEntity implements Explosive {
         texture = GameScreen.atlas.findRegion(name);
         if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
         else batch.draw(texture, (int)location.x+texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
+
+        super.render(batch);
     }
 
     @Override

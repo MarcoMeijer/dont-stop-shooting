@@ -20,5 +20,7 @@ public abstract class Entity {
 
     public abstract void tick();
 
-    public abstract void render(SpriteBatch batch);
+    public void render(SpriteBatch batch) {
+        if (screen.debugMode) hitBox.render(batch);
+    }
 }

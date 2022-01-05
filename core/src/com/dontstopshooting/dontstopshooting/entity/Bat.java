@@ -36,7 +36,7 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable {
                 GameScreen.atlas.findRegion("bat9")
         );
 
-        hitBox.width = 16;
+        hitBox.width = 15;
         hitBox.height = 11;
         hitBox.offset.set(4, 5);
 
@@ -58,16 +58,9 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable {
 
     @Override
     public void render(SpriteBatch batch) {
-        time += Gdx.graphics.getDeltaTime();
+        super.render(batch);
 
-        batch.end();
-        ShapeRenderer renderer = new ShapeRenderer();
-        renderer.setColor(Color.RED);
-        renderer.setProjectionMatrix(batch.getProjectionMatrix());
-        renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.rect(hitBox.getRealLocation().x, hitBox.getRealLocation().y, hitBox.width,  hitBox.height);
-        renderer.end();
-        batch.begin();
+        time += Gdx.graphics.getDeltaTime();
 
         batch.draw(flyingAnimation.getKeyFrame(time, true), (int)location.x, (int)location.y);
     }
