@@ -134,7 +134,11 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
 
     @Override
     public void onHit() {
-        if (state == State.FUSING) return;
+        if (state == State.FUSING) {
+            fuseTimer -= 10;
+            fuseTimer = Math.max(fuseTimer, 1);
+            return;
+        }
         fuseTimer = (int) (GameScreen.TPS*(0.4 + new Random().nextFloat()*0.1f));
         velocity.x = 0;
         state = State.FUSING;
