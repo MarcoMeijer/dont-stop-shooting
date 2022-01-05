@@ -42,7 +42,7 @@ public class PlayerCamera {
         // center camera to player
         camera.setToOrtho(false, GameScreen.gameWidth, GameScreen.gameHeight);
         camera.translate(-GameScreen.gameWidth/2.0f, -GameScreen.gameHeight/2.0f);
-        camera.translate((int) startX, GameScreen.gameHeight/2.0f + 5.0f);
+        camera.translate((int) startX, GameScreen.gameHeight/2.0f + 46.0f);
         Random random = new Random();
         camera.translate((int) ((random.nextFloat() - 0.5f)*shakeFactor), (int) ((random.nextFloat()-0.5f)*shakeFactor));
         camera.update();

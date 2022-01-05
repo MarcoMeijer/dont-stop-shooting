@@ -48,8 +48,8 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
     @Override
     public void render(SpriteBatch batch) {
         time += Gdx.graphics.getDeltaTime(); // todo modulo
-        if (Math.abs(velocity.y) == 0) batch.draw(walkingAnimation.getKeyFrame(time, true), location.x, location.y);
-        else batch.draw(jump, location.x, location.y);
+        if (Math.abs(velocity.y) == 0) batch.draw(walkingAnimation.getKeyFrame(time, true), (int)location.x, (int)location.y);
+        else batch.draw(jump, (int)location.x, (int)location.y);
     }
 
 

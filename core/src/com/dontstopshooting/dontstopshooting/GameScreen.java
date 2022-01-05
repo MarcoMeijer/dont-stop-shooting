@@ -44,7 +44,7 @@ public class GameScreen implements Screen {
     public OrthographicCamera camera;
     public PlayerCamera playerCamera;
     private final OrthographicCamera screenCamera;
-    public final Player player;
+    public Player player;
 
     static {
         PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
@@ -71,16 +71,11 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen() {
-        player = new Player(this, new Vector2(200.0f, 150.0f));
-
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, gameWidth, gameHeight, false);
-
         screenCamera = new OrthographicCamera();
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
-        mapGenerator = new MapGenerator(this);
-        playerCamera = new PlayerCamera(this, player);
-        camera = playerCamera.camera;
+        restart();
     }
 
     public long getTick() {
@@ -117,6 +112,10 @@ public class GameScreen implements Screen {
             } else {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            restart();
         }
 
 
@@ -171,5 +170,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+    }
+
+    public void restart() {
+        entities.clear();
+        player = new Player(this, new Vector2(200.0f, 150.0f));
+        mapGenerator = new MapGenerator(this);
+        playerCamera = new PlayerCamera(this, player);
+        camera = playerCamera.camera;
     }
 }
