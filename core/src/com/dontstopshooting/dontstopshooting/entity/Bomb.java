@@ -32,7 +32,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
                 GameScreen.atlas.findRegion("bomb3"),
                 GameScreen.atlas.findRegion("bomb4")
         );
-        this.fusingAnimation = new Animation<>(.05f,
+        this.fusingAnimation = new Animation<>(.1f,
                 GameScreen.atlas.findRegion("bombexplode1"),
                 GameScreen.atlas.findRegion("bombexplode2")
         );
@@ -68,7 +68,9 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
         time += Gdx.graphics.getDeltaTime(); // todo modulo
 
         TextureRegion texture;
-        if (fuse != -1) texture = fusingAnimation.getKeyFrame(Interpolation.slowFast.apply(0, maxFuseTime, maxFuseTime-fuse), true);
+        if (fuse != -1) {
+            texture = fusingAnimation.getKeyFrame(Interpolation.pow2OutInverse.apply((maxFuseTime-fuse)/(float)maxFuseTime), true);
+        }
         else if (Math.abs(velocity.y) == 0) texture = walkingAnimation.getKeyFrame(time, true);
         else texture = jump;
 
@@ -79,7 +81,8 @@ public class Bomb extends PhysicsEntity implements BulletHittable {
     @Override
     public void onHit() {
         if (fuse != -1) return;
-        fuse = (int) (GameScreen.TPS*0.25f);
+        Random rand = new Random();
+        fuse = (int) (GameScreen.TPS*(0.4 + rand.nextFloat()*0.1f));
         velocity.x = 0;
     }
 }
