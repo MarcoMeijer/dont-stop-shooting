@@ -96,6 +96,7 @@ public class GameScreen implements Screen {
         packer.pack("healthbar1", new Pixmap(Gdx.files.internal("healthbar1.png")));
         packer.pack("healthbar2", new Pixmap(Gdx.files.internal("healthbar2.png")));
         packer.pack("healthbar3", new Pixmap(Gdx.files.internal("healthbar3.png")));
+        packer.pack("bigbullet", new Pixmap(Gdx.files.internal("bigbullet.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
@@ -221,6 +222,8 @@ public class GameScreen implements Screen {
     public void restart() {
         entities.clear();
         if (player != null && player.score > highScore) highScore = player.score;
+        newEntities.clear();
+        oldEntities.clear();
         player = new Player(this, new Vector2(200.0f, 150.0f));
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.entity.Bat;
 import com.dontstopshooting.dontstopshooting.entity.Bomb;
+import com.dontstopshooting.dontstopshooting.entity.BulletPowerUp;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 import java.util.ArrayList;
@@ -73,6 +74,10 @@ public class MapGenerator {
                     }
                     if (entityName.equals("bath")) {
                         new Bat(screen, new Vector2(offset + x*16.0f-4, y*16.0f - 2), false);
+                        cell.setTile(null);
+                    }
+                    if (entityName.equals("bullet")) {
+                        new BulletPowerUp(screen, new Vector2(offset + x*16.0f+4, y*16.0f));
                         cell.setTile(null);
                     }
                 }

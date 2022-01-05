@@ -194,6 +194,7 @@
  <tile id="36">
   <properties>
    <property name="collision" type="bool" value="false"/>
+   <property name="entity" value="bullet"/>
   </properties>
  </tile>
  <tile id="37">

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
     public static final float bulletPushAcc = 22;
@@ -16,6 +17,7 @@ public class Player extends PhysicsEntity implements Explosive {
     public TextureRegion texture = GameScreen.atlas.findRegion("player");
     public int health;
     public int score;
+    public int bullets = 200;
 
     public Player(GameScreen screen, Vector2 loc) {
         super(screen, loc);
@@ -33,6 +35,7 @@ public class Player extends PhysicsEntity implements Explosive {
         velocity.add(vec.cpy().scl(-bulletPushAcc));
         GameScreen.particles.createGunExplosion(bulletLocation.x, bulletLocation.y);
         score += 10;
+        bullets--;
     }
 
     @Override
@@ -41,6 +44,15 @@ public class Player extends PhysicsEntity implements Explosive {
         velocity.scl(0.995f);
         if (screen.getTick() % ((GameScreen.TPS*60)/rpm) == 0) {
             shoot(cursor);
+        }
+
+        for (Entity entity : screen.entities) {
+            if (entity instanceof PlayerCollidable) {
+                if (HitBox.intersect(this.hitBox, entity.hitBox)) {
+                    ((PlayerCollidable) entity).onCollide(this);
+                    score += 100;
+                }
+            }
         }
     }
 

@@ -23,4 +23,8 @@ public abstract class Entity {
     public void render(SpriteBatch batch) {
         if (screen.debugMode) hitBox.render(batch);
     }
+
+    public void destroy() {
+        screen.oldEntities.add(this);
+    }
 }
