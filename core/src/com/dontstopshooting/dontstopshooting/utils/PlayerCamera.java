@@ -24,6 +24,7 @@ public class PlayerCamera {
 
     public void shake(float amount) {
         shakeFactor += amount;
+        shakeFactor = Math.min(shakeFactor, 32.0f);
     }
 
     public void update() {

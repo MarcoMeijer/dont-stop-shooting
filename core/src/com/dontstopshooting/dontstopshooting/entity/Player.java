@@ -1,6 +1,7 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +11,7 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
     public static final float bulletPushAcc = 22;
-    private float rpm = 960;
+    private float rpm = 480;
 
     private Vector2 cursor = Vector2.X;
 
@@ -42,7 +43,7 @@ public class Player extends PhysicsEntity implements Explosive {
     public void tick() {
         super.tick();
         velocity.scl(0.995f);
-        if (screen.getTick() % ((GameScreen.TPS*60)/rpm) == 0) {
+        if (screen.getTick() % ((GameScreen.TPS*60)/((Gdx.input.isButtonPressed(Input.Buttons.LEFT) ? rpm*2 : rpm))) == 0) {
             shoot(cursor);
         }
 

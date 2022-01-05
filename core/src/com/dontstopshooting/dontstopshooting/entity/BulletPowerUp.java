@@ -15,6 +15,8 @@ public class BulletPowerUp extends PhysicsEntity implements PlayerCollidable {
         super(screen, location);
         sprite = GameScreen.atlas.findRegion("bigbullet");
         hasGravity = false;
+        hitBox.width = 8;
+        hitBox.height = 16;
     }
 
     @Override
