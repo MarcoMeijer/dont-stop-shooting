@@ -14,12 +14,16 @@ public class Player extends PhysicsEntity implements Explosive {
     private Vector2 cursor = Vector2.X;
 
     public TextureRegion texture = GameScreen.atlas.findRegion("player");
+    public int health;
+    public int score;
 
     public Player(GameScreen screen, Vector2 loc) {
         super(screen, loc);
         hitBox.offset.x = 5;
         hitBox.width = 5;
         hitBox.height = 15;
+        health = 3;
+        score = 0;
     }
 
     public void shoot(Vector2 vec) {
@@ -28,6 +32,7 @@ public class Player extends PhysicsEntity implements Explosive {
         new PlayerBullet(screen, bulletLocation.cpy(), vec);
         velocity.add(vec.cpy().scl(-bulletPushAcc));
         GameScreen.particles.createGunExplosion(bulletLocation.x, bulletLocation.y);
+        score += 10;
     }
 
     @Override
@@ -61,6 +66,19 @@ public class Player extends PhysicsEntity implements Explosive {
 
     @Override
     public void onExplode() {
-        System.out.println("player exploded");
+        takeDamage();
+    }
+
+    public void takeDamage() {
+        this.health--;
+        if (this.health == 0) {
+            die();
+        }
+    }
+
+    public void die() {
+        GameScreen.particles.createExplosion(location.x, location.y);
+        screen.oldEntities.add(this);
+        this.health = 0;
     }
 }

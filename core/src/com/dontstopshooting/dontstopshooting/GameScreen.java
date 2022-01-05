@@ -53,9 +53,10 @@ public class GameScreen implements Screen {
     private final BackgroundScroller backgroundScroller;
     public Player player;
     public Stage stage;
+    public GameUi ui;
 
     static {
-        PixmapPacker packer = new PixmapPacker(512, 512, Pixmap.Format.RGBA8888, 2, true);
+        PixmapPacker packer = new PixmapPacker(2048, 2048, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
         packer.pack("player1", new Pixmap(Gdx.files.internal("player1.png")));
         packer.pack("player2", new Pixmap(Gdx.files.internal("player2.png")));
@@ -88,6 +89,12 @@ public class GameScreen implements Screen {
         packer.pack("caves1", new Pixmap(Gdx.files.internal("caves1.png")));
         packer.pack("caves2", new Pixmap(Gdx.files.internal("caves2.png")));
         packer.pack("caves3", new Pixmap(Gdx.files.internal("caves3.png")));
+        packer.pack("heart", new Pixmap(Gdx.files.internal("heart.png")));
+        packer.pack("heartempty", new Pixmap(Gdx.files.internal("heartempty.png")));
+        packer.pack("healthbar0", new Pixmap(Gdx.files.internal("healthbar0.png")));
+        packer.pack("healthbar1", new Pixmap(Gdx.files.internal("healthbar1.png")));
+        packer.pack("healthbar2", new Pixmap(Gdx.files.internal("healthbar2.png")));
+        packer.pack("healthbar3", new Pixmap(Gdx.files.internal("healthbar3.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
@@ -104,7 +111,8 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(gameWidth, gameHeight, screenCamera);
         backgroundScroller = new BackgroundScroller();
         stage = new Stage();
-        stage.addActor(new GameUi(skin));
+        ui = new GameUi(skin);
+        stage.addActor(ui);
         restart();
     }
 
@@ -145,6 +153,8 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) restart();
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) debugMode = !debugMode;
+
+        ui.update();
 
         ScreenUtils.clear(56f/255, 45f/255, 107f/255, 1.0f);
         SpriteBatch batch = new SpriteBatch();
@@ -213,5 +223,6 @@ public class GameScreen implements Screen {
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;
+        ui.player = player;
     }
 }
