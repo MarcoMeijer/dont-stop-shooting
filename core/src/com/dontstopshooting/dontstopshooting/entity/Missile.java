@@ -1,6 +1,5 @@
 package com.dontstopshooting.dontstopshooting.entity;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -33,8 +32,8 @@ public class Missile extends PhysicsEntity implements BulletHittable {
     public void tick() {
         super.tick();
 
-        float realAcc = Math.signum(velocity.crs(target.hitBox.getCenter().mulAdd(hitBox.getCenter(), -1))) * rotationAcc;
-        System.out.println(realAcc);
+        float realAcc = Math.signum(velocity.cpy().nor().crs(target.hitBox.getCenter().mulAdd(hitBox.getCenter(), -1).nor())) * rotationAcc;
+        //System.out.println(realAcc/rotationSpeed);
         float drs = realAcc * GameScreen.SPT;
         float dr = rotationSpeed * GameScreen.SPT + drs * 0.5f * GameScreen.SPT;
         rotationSpeed += drs;
