@@ -144,7 +144,7 @@ public class GameScreen implements Screen {
                     PhysicsEntity physicsEntity = (PhysicsEntity)e;
                     Vector2 vec = physicsEntity.hitBox.getCenter().sub(location);
                     Vector2 blastForce = vec.cpy().nor().scl(blast/vec.len2());
-                    System.out.println(blastForce);
+                    //System.out.println(blastForce);
                     physicsEntity.velocity.add(blastForce);
                 }
             }
