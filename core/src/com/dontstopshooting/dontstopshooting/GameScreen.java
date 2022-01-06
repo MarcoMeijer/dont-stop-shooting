@@ -61,6 +61,8 @@ public class GameScreen implements Screen {
     public SpriteBatch batch;
     public int highScore = 0;
 
+    public BackgroundMusic music;
+
     static {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
@@ -204,6 +206,8 @@ public class GameScreen implements Screen {
         stage.act(delta);
         stage.draw();
         debugUi.update();
+
+        music.update();
     }
 
     @Override
@@ -240,5 +244,9 @@ public class GameScreen implements Screen {
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;
         ui.player = player;
+        if (music != null) {
+            music.destroy();
+        }
+        music = new BackgroundMusic();
     }
 }
