@@ -36,6 +36,7 @@ public class BulletPowerUp extends Entity implements PlayerCollidable {
         player.bullets += 25;
         player.score += 1000;
         this.destroy();
+        GameScreen.particles.createBulletPickUp(hitBox.getCenter().x, hitBox.getCenter().y);
         new TextEntity("1000", screen, location);
     }
 }

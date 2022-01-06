@@ -22,6 +22,7 @@ public class ParticleHandler {
         createPool("explosion");
         createPool("gun");
         createPool("bullet");
+        createPool("bulletpickup");
         createPool("wood");
     }
 
@@ -36,34 +37,33 @@ public class ParticleHandler {
     public void createExplosion(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("explosion").obtain();
         effect.setPosition(x, y);
-        effect.setEmittersCleanUpBlendFunction(false);
-        effect.start();
         additiveEffects.add(effect);
     }
 
     public void createGunExplosion(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("gun").obtain();
         effect.setPosition(x, y);
-        effect.setEmittersCleanUpBlendFunction(false);
-        effect.start();
         additiveEffects.add(effect);
     }
 
     public void createBullet(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("bullet").obtain();
         effect.setPosition(x, y);
-        effect.setEmittersCleanUpBlendFunction(false);
-        effect.start();
         otherEffects.add(effect);
     }
 
     public void createWood(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("wood").obtain();
         effect.setPosition(x, y);
-        effect.setEmittersCleanUpBlendFunction(false);
-        effect.start();
         otherEffects.add(effect);
     }
+
+    public void createBulletPickUp(float x, float y) {
+        ParticleEffectPool.PooledEffect effect = pools.get("bulletpickup").obtain();
+        effect.setPosition(x, y);
+        otherEffects.add(effect);
+    }
+
 
     public void draw(SpriteBatch batch, float delta) {
         for (int i = additiveEffects.size() - 1; i >= 0; i--) {
