@@ -10,15 +10,14 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dontstopshooting.dontstopshooting.entity.Entity;
-import com.dontstopshooting.dontstopshooting.entity.Missile;
-import com.dontstopshooting.dontstopshooting.entity.Player;
+import com.dontstopshooting.dontstopshooting.entity.*;
 import com.dontstopshooting.dontstopshooting.ui.DebugUI;
 import com.dontstopshooting.dontstopshooting.ui.GameUi;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -131,6 +130,36 @@ public class GameScreen implements Screen {
 
     public boolean collisionCheck(HitBox hitBox) {
         return mapGenerator.collisionCheck(hitBox);
+    }
+
+    public void explosion(Vector2 location, float radius, float blast) {
+        GameScreen.particles.createExplosion(location.x, location.y);
+        playerCamera.shake(8.0f);
+
+        float radius2 = radius*radius;
+        for (Entity e : entities) {
+            if (!oldEntities.contains(e)) {
+                if (e.hitBox.getCenter().dst2(location) <= radius2) {
+                    if (e instanceof Explosive) ((Explosive) e).onExplode();
+                }
+                if (e instanceof PhysicsEntity) {
+                    PhysicsEntity physicsEntity = (PhysicsEntity)e;
+                    Vector2 vec = physicsEntity.hitBox.getCenter().sub(location);
+                    Vector2 blastForce = vec.cpy().nor().scl(blast/vec.len2());
+                    //System.out.println(blastForce);
+                    physicsEntity.velocity.add(blastForce);
+                }
+            }
+        }
+
+        int iRadius = (int)Math.ceil(radius/16);
+        int iRadius2 = iRadius*iRadius;
+        GridPoint2 center = new GridPoint2((int) location.x/16, (int) location.y/16);
+        for (int dx=-iRadius; dx<=iRadius; dx++) {
+            for (int dy=-iRadius; dy<=iRadius; dy++) {
+                if (dx*dx+dy*dy <= iRadius2) mapGenerator.onHit(center.cpy().add(dx, dy));
+            }
+        }
     }
 
     @Override

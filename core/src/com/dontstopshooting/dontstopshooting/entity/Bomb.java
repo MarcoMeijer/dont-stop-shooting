@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
@@ -57,24 +56,8 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     }
 
     public void explode() {
-        GameScreen.particles.createExplosion(location.x, location.y);
-        screen.oldEntities.add(this);
-        screen.playerCamera.shake(8.0f);
-
-        for (Entity e : screen.entities) {
-            if (!screen.oldEntities.contains(e)) {
-                if (e instanceof Explosive && e.hitBox.getCenter().dst(hitBox.getCenter()) <= explosionRadius) {
-                    ((Explosive) e).onExplode();
-                }
-            }
-        }
-
-        GridPoint2 center = new GridPoint2((int) hitBox.getCenter().x/16, (int) hitBox.getCenter().y/16);
-        for (int dx=-2; dx<=2; dx++) {
-            for (int dy=-2; dy<=2; dy++) {
-                screen.mapGenerator.onHit(center.cpy().add(dx, dy));
-            }
-        }
+        destroy();
+        screen.explosion(hitBox.getCenter(), explosionRadius, 20000);
     }
 
     @Override
@@ -113,6 +96,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
                 break;
             case FUSING:
                 if (--fuseTimer == 0) explode();
+                velocity.scl(0.999f);
                 break;
         }
     }

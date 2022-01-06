@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Missile extends PhysicsEntity implements BulletHittable {
     public static final float speed = 80;
@@ -32,6 +33,15 @@ public class Missile extends PhysicsEntity implements BulletHittable {
     public void tick() {
         super.tick();
 
+        for (Entity e : screen.entities) {
+            if (e instanceof PhysicsEntity && e != this) {
+                if (HitBox.intersect(e.hitBox, hitBox)) {
+                    explode();
+                    return;
+                }
+            }
+        }
+
         float realAcc = Math.signum(velocity.cpy().nor().crs(target.hitBox.getCenter().mulAdd(hitBox.getCenter(), -1).nor())) * rotationAcc;
         //System.out.println(realAcc/rotationSpeed);
         float drs = realAcc * GameScreen.SPT;
@@ -43,9 +53,14 @@ public class Missile extends PhysicsEntity implements BulletHittable {
         velocity.rotateRad(dr);
     }
 
+    public void explode() {
+        destroy();
+        screen.explosion(hitBox.getCenter(), 25, 10000);
+    }
+
     @Override
     public void onHit() {
-
+        explode();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
@@ -19,6 +20,8 @@ public class Player extends PhysicsEntity implements Explosive {
     public int health;
     public int score;
     public int bullets = 200;
+    private float invincibility = 0.0f;
+    private static final float maxInvincibility = 3.0f;
 
     public Player(GameScreen screen, Vector2 loc) {
         super(screen, loc);
@@ -38,7 +41,7 @@ public class Player extends PhysicsEntity implements Explosive {
         score += 10;
         bullets--;
         if (bullets == 0) {
-            die();
+            kill();
         }
     }
 
@@ -46,6 +49,7 @@ public class Player extends PhysicsEntity implements Explosive {
     public void tick() {
         super.tick();
         velocity.scl(0.995f);
+        invincibility -= GameScreen.SPT;
         if (screen.getTick() % ((GameScreen.TPS*60)/((Gdx.input.isButtonPressed(Input.Buttons.LEFT) ? rpm*2 : rpm))) == 0) {
             shoot(cursor);
         }
@@ -73,8 +77,10 @@ public class Player extends PhysicsEntity implements Explosive {
 
         String name = "player" + (ang+1);
         texture = GameScreen.atlas.findRegion(name);
-        if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
-        else batch.draw(texture, (int)location.x+texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
+        if (invincibility <= 0.0f || Math.sin(Interpolation.pow2OutInverse.apply(1.0f - invincibility/maxInvincibility)*80.0f) > 0.0f) {
+            if (angle < 180.0f) batch.draw(texture, (int)location.x, (int)location.y, texture.getRegionWidth(), texture.getRegionHeight());
+            else batch.draw(texture, (int)location.x+texture.getRegionWidth(), (int)location.y, -texture.getRegionWidth(), texture.getRegionHeight());
+        }
 
         super.render(batch);
     }
@@ -85,16 +91,20 @@ public class Player extends PhysicsEntity implements Explosive {
     }
 
     public void takeDamage() {
+        if (invincibility > 0.0f) {
+            return;
+        }
         this.health--;
         if (this.health == 0) {
-            die();
+            kill();
         }
         health = Math.max(health, 0);
+        invincibility = maxInvincibility;
     }
 
-    public void die() {
+    public void kill() {
+        destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
-        screen.oldEntities.add(this);
         this.health = 0;
     }
 }
