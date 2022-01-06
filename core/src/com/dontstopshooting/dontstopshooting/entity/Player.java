@@ -27,7 +27,7 @@ public class Player extends PhysicsEntity implements Explosive {
         super(screen, loc);
         hitBox.offset.x = 5;
         hitBox.width = 5;
-        hitBox.height = 15;
+        hitBox.height = 14;
         health = 3;
         score = 0;
     }
