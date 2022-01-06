@@ -84,7 +84,7 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
     }
 
     public void kill() {
-        screen.oldEntities.add(this);
+        destroy();
         GameScreen.particles.createGunExplosion(hitBox.getCenter().x, hitBox.getCenter().y);
     }
 

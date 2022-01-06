@@ -41,7 +41,7 @@ public class Player extends PhysicsEntity implements Explosive {
         score += 10;
         bullets--;
         if (bullets == 0) {
-            die();
+            kill();
         }
     }
 
@@ -96,15 +96,15 @@ public class Player extends PhysicsEntity implements Explosive {
         }
         this.health--;
         if (this.health == 0) {
-            die();
+            kill();
         }
         health = Math.max(health, 0);
         invincibility = maxInvincibility;
     }
 
-    public void die() {
+    public void kill() {
+        destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
-        screen.oldEntities.add(this);
         this.health = 0;
     }
 }
