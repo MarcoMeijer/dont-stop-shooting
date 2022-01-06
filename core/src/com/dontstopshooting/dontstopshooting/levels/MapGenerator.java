@@ -92,7 +92,7 @@ public class MapGenerator {
                         cell.setTile(null);
                     }
                     if (entityName.equals("missile")) {
-                        new Missile(screen, new Vector2(offset + x*16.0f+4, y*16.0f), new Vector2(1, 0), screen.player);
+                        new Missile(screen, new Vector2(offset + x*16.0f+4, y*16.0f), new Vector2(0, 1), screen.player);
                         cell.setTile(null);
                     }
                 }
