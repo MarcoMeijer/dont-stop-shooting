@@ -28,7 +28,7 @@ public class BulletPowerUp extends Entity implements PlayerCollidable {
 
         time += Gdx.graphics.getDeltaTime(); // todo modulo
         int x = (int)location.x, y = (int)location.y;
-        batch.draw(sprite, x, y + (float) (Math.sin(time*8.0f)*4.0f));
+        batch.draw(sprite, x, y + (float) (Math.sin(time*6.0f)*2.0f));
     }
 
     @Override
