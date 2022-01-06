@@ -280,8 +280,8 @@ public class GameScreen implements Screen {
         ui.player = player;
         if (music != null) {
             music.destroy();
-            music.setMute(musicMute);
         }
         music = new BackgroundMusic();
+        music.setMute(musicMute);
     }
 }
