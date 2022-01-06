@@ -1,0 +1,17 @@
+[
+  {
+    "levels": [
+      "level1"
+    ],
+    "repeat": [1,1]
+  },
+  {
+    "levels": [
+      "level2",
+      "level3",
+      "level4",
+      "level5"
+    ],
+    "repeat": [4,4]
+  }
+]

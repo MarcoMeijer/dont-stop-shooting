@@ -1,5 +1,6 @@
-package com.dontstopshooting.dontstopshooting;
+package com.dontstopshooting.dontstopshooting.levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
@@ -7,6 +8,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.dontstopshooting.dontstopshooting.GameScreen;
 import com.dontstopshooting.dontstopshooting.entity.Bat;
 import com.dontstopshooting.dontstopshooting.entity.Bomb;
 import com.dontstopshooting.dontstopshooting.entity.BulletPowerUp;
@@ -19,13 +24,18 @@ import java.util.Random;
 public class MapGenerator {
 
     private final List<LevelMap> levels;
+    private final List<Difficulty> difficulties;
+    private int difficulty = 0;
     private GameScreen screen;
 
     public MapGenerator(GameScreen screen) {
         levels = new ArrayList<>();
         this.screen = screen;
 
-        addLevel("level1.tmx");
+        difficulties = new ArrayList<>();
+        JsonValue root = new JsonReader().parse(Gdx.files.internal("levels/levels.json").readString());
+        for (int i=0; i<root.size; i++)
+            difficulties.add(new Difficulty(root.get(i)));
     }
 
     public boolean collisionCheck(HitBox hitBox) {
@@ -87,17 +97,11 @@ public class MapGenerator {
 
     public void render(OrthographicCamera camera) {
         if (screen.player.location.x + GameScreen.gameWidth >= levels.size()*512.0f) {
-            Random random = new Random();
-            int rng = random.nextInt(4);
-            rng = 2;
-            if (rng == 0)
-                addLevel("level2.tmx");
-            if (rng == 1)
-                addLevel("level3.tmx");
-            if (rng == 2)
-                addLevel("level4.tmx");
-            if (rng == 3)
-                addLevel("level5.tmx");
+            Difficulty difficultyObject = difficulties.get(difficulty);
+            addLevel("levels/"+difficultyObject.getNext()+".tmx");
+            if (difficultyObject.isDone() && difficulty + 1 < difficulties.size()) {
+                difficulty++;
+            }
         }
         for (LevelMap level : levels) {
             level.render(camera);
