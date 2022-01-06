@@ -61,6 +61,9 @@ public class GameScreen implements Screen {
     public SpriteBatch batch;
     public int highScore = 0;
 
+    public BackgroundMusic music;
+    public boolean musicMute = false;
+
     static {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
@@ -145,7 +148,7 @@ public class GameScreen implements Screen {
                     PhysicsEntity physicsEntity = (PhysicsEntity)e;
                     Vector2 vec = physicsEntity.hitBox.getCenter().sub(location);
                     Vector2 blastForce = vec.cpy().nor().scl(blast/vec.len2());
-                    System.out.println(blastForce);
+                    //System.out.println(blastForce);
                     physicsEntity.velocity.add(blastForce);
                 }
             }
@@ -196,6 +199,10 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
             hitBoxes = !hitBoxes;
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            musicMute = !musicMute;
+            music.setMute(musicMute);
+        }
 
         ui.update();
 
@@ -234,6 +241,8 @@ public class GameScreen implements Screen {
         stage.act(delta);
         stage.draw();
         debugUi.update();
+
+        music.update();
     }
 
     @Override
@@ -270,5 +279,10 @@ public class GameScreen implements Screen {
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;
         ui.player = player;
+        if (music != null) {
+            music.destroy();
+            music.setMute(musicMute);
+        }
+        music = new BackgroundMusic();
     }
 }
