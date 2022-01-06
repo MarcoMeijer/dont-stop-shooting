@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
-public class BulletPowerUp extends PhysicsEntity implements PlayerCollidable {
+public class BulletPowerUp extends Entity implements PlayerCollidable {
 
     private final TextureRegion sprite;
     private float time = 0.0f;
@@ -14,9 +14,12 @@ public class BulletPowerUp extends PhysicsEntity implements PlayerCollidable {
     public BulletPowerUp(GameScreen screen, Vector2 location) {
         super(screen, location);
         sprite = GameScreen.atlas.findRegion("bigbullet");
-        gravityForce.vec.setZero();
         hitBox.width = 8;
         hitBox.height = 16;
+    }
+
+    @Override
+    public void tick() {
     }
 
     @Override
