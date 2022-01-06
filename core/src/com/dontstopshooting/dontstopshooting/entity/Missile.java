@@ -9,10 +9,13 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 public class Missile extends PhysicsEntity implements BulletHittable {
     public static final float speed = 80;
     public static final float rotationAcc = (float) (Math.PI*2*10);
+    public static final float followRange2 = 500*500;
 
     private final Player target;
 
     private float rotationSpeed = 0;
+
+    private boolean seen = false;
 
     private static final TextureRegion texture = GameScreen.atlas.findRegion("missile");
 
@@ -30,27 +33,40 @@ public class Missile extends PhysicsEntity implements BulletHittable {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void onWallCollide(boolean vertical) {
+        explode();
+    }
 
-        for (Entity e : screen.entities) {
-            if (e instanceof PhysicsEntity && e != this) {
-                if (HitBox.intersect(e.hitBox, hitBox)) {
-                    explode();
-                    return;
+    @Override
+    public void tick() {
+        Vector2 vecToTarget = target.hitBox.getCenter().sub(hitBox.getCenter());
+        if (vecToTarget.len2() <= followRange2) {
+            super.tick();
+
+            for (Entity e : screen.entities) {
+                if (e instanceof PhysicsEntity && e != this) {
+                    if (HitBox.intersect(e.hitBox, hitBox)) {
+                        explode();
+                        return;
+                    }
                 }
             }
-        }
 
-        float realAcc = Math.signum(velocity.cpy().nor().crs(target.hitBox.getCenter().mulAdd(hitBox.getCenter(), -1).nor())) * rotationAcc;
-        //System.out.println(realAcc/rotationSpeed);
-        float drs = realAcc * GameScreen.SPT;
-        float dr = rotationSpeed * GameScreen.SPT + drs * 0.5f * GameScreen.SPT;
-        rotationSpeed += drs;
-        rotationSpeed *= 0.99f;
-        velocity.nor();
-        velocity.scl(speed);
-        velocity.rotateRad(dr);
+            float realAcc = Math.signum(velocity.cpy().crs(vecToTarget)) * rotationAcc;
+            velocity.nor();
+            velocity.scl(speed);
+            seen = true;
+            float drs = realAcc * GameScreen.SPT;
+            float dr = rotationSpeed * GameScreen.SPT + drs * 0.5f * GameScreen.SPT;
+            rotationSpeed += drs;
+            rotationSpeed *= 0.99f;
+            velocity.rotateRad(dr);
+        } else {
+            if (seen) {
+                destroy();
+                seen = false;
+            }
+        }
     }
 
     public void explode() {
@@ -65,10 +81,12 @@ public class Missile extends PhysicsEntity implements BulletHittable {
 
     @Override
     public void render(SpriteBatch batch) {
-        float angle = this.velocity.angleDeg();
-        batch.draw(texture, hitBox.getCenter().x-8, hitBox.getCenter().y-4, 8.0f, 4.0f, 16.0f, 9.0f, 1.0f, 1.0f, angle + 180.0f);
-        Vector2 vec = velocity.cpy().nor().scl(-7).add(hitBox.getCenter());
-        GameScreen.particles.createGunExplosion(vec.x, vec.y);
-        super.render(batch);
+        if (seen) {
+            float angle = this.velocity.angleDeg();
+            batch.draw(texture, hitBox.getCenter().x - 8, hitBox.getCenter().y - 4, 8.0f, 4.0f, 16.0f, 9.0f, 1.0f, 1.0f, angle + 180.0f);
+            Vector2 vec = velocity.cpy().nor().scl(-7).add(hitBox.getCenter());
+            GameScreen.particles.createGunExplosion(vec.x, vec.y);
+            super.render(batch);
+        }
     }
 }

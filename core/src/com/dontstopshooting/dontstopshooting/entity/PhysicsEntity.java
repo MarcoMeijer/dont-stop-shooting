@@ -28,6 +28,9 @@ public abstract class PhysicsEntity extends Entity {
         forces.add(gravityForce);
     }
 
+    public void onWallCollide(boolean vertical) {
+    }
+
     @Override
     public void tick() {
         Vector2 acceleration = new Vector2();
@@ -49,6 +52,7 @@ public abstract class PhysicsEntity extends Entity {
                 }
                 location.add(-Math.signum(dx.x), 0);
                 velocity.x = 0;
+                onWallCollide(false);
             }
         }
 
@@ -63,6 +67,7 @@ public abstract class PhysicsEntity extends Entity {
                 location.add(0, -Math.signum(dx.y));
                 if (!gravityForce.vec.isZero() && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
                 else velocity.y = 0;
+                onWallCollide(true);
             }
         }
     }
