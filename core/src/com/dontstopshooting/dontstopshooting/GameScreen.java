@@ -178,7 +178,8 @@ public class GameScreen implements Screen {
             newEntities.clear();
             oldEntities.clear();
             for (Entity entity : entities) {
-                entity.tick();
+                if (entity.location.x <= playerCamera.startX - 300f) entity.destroy();
+                else entity.tick();
             }
 
             time -= SPT;

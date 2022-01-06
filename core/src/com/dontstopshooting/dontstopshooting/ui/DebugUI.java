@@ -8,9 +8,8 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public class DebugUI extends Table {
 
-    private Label fpsLabel;
-    private Label drawCalls;
-    private GameScreen screen;
+    private final Label fpsLabel, drawCalls, entityCount;
+    private final GameScreen screen;
     private int lastRenderCalls = 0;
 
     public DebugUI(Skin skin, GameScreen screen) {
@@ -26,12 +25,18 @@ public class DebugUI extends Table {
         // draw calls
         drawCalls = new Label("Draw calls:", getSkin());
         this.row();
-        this.add(drawCalls).right().top().expand();
+        this.add(drawCalls).right().top().expandX();
+
+        // entity count
+        entityCount = new Label("Entity Count:", getSkin());
+        this.row();
+        this.add(entityCount).right().top().expand();
     }
 
     public void update() {
         fpsLabel.setText(String.format("FPS: %d", Gdx.graphics.getFramesPerSecond()));
         drawCalls.setText(String.format("Draw calls: %d", screen.batch.totalRenderCalls - lastRenderCalls));
+        entityCount.setText(String.format("Entity Count: %d", screen.entities.size()));
         lastRenderCalls = screen.batch.totalRenderCalls;
     }
 }
