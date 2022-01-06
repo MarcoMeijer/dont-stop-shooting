@@ -57,8 +57,8 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     }
 
     public void explode() {
+        destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
-        screen.oldEntities.add(this);
         screen.playerCamera.shake(8.0f);
 
         for (Entity e : screen.entities) {

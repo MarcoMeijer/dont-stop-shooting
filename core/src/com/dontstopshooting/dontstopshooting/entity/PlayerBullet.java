@@ -26,7 +26,7 @@ public class PlayerBullet extends Entity {
     public void tick() {
         location.add(velocity.cpy().scl(GameScreen.SPT));
         if (++age >= maxAge) {
-            screen.oldEntities.add(this);
+            destroy();
             return;
         }
 
@@ -35,7 +35,7 @@ public class PlayerBullet extends Entity {
                 if (HitBox.intersect(entity.hitBox, this.hitBox)) {
                     BulletHittable hittable = (BulletHittable) entity;
                     hittable.onHit();
-                    screen.oldEntities.add(this);
+                    destroy();
                     return;
                 }
             }
@@ -44,7 +44,7 @@ public class PlayerBullet extends Entity {
         if (screen.collisionCheck(this.hitBox)) {
             GameScreen.particles.createBullet(location.x, location.y);
             screen.mapGenerator.onHit(new GridPoint2((int)location.x/16, (int)location.y/16));
-            screen.oldEntities.add(this);
+            destroy();
         }
     }
 
