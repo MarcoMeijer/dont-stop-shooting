@@ -200,6 +200,7 @@
  <tile id="37">
   <properties>
    <property name="collision" type="bool" value="false"/>
+   <property name="entity" value="missile"/>
   </properties>
  </tile>
  <tile id="38">
