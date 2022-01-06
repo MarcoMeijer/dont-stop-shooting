@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
+import com.dontstopshooting.dontstopshooting.entity.Missile;
 import com.dontstopshooting.dontstopshooting.entity.Player;
 import com.dontstopshooting.dontstopshooting.ui.GameUi;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
@@ -92,6 +93,7 @@ public class GameScreen implements Screen {
         packer.pack("healthbar2", new Pixmap(Gdx.files.internal("healthbar2.png")));
         packer.pack("healthbar3", new Pixmap(Gdx.files.internal("healthbar3.png")));
         packer.pack("bigbullet", new Pixmap(Gdx.files.internal("bigbullet.png")));
+        packer.pack("missile", new Pixmap(Gdx.files.internal("missile.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
@@ -220,6 +222,7 @@ public class GameScreen implements Screen {
         newEntities.clear();
         oldEntities.clear();
         player = new Player(this, new Vector2(200.0f, 150.0f));
+        new Missile(this, new Vector2(100, 150), Vector2.X, player);
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;

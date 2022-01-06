@@ -89,6 +89,7 @@ public class Player extends PhysicsEntity implements Explosive {
         if (this.health == 0) {
             die();
         }
+        health = Math.max(health, 0);
     }
 
     public void die() {

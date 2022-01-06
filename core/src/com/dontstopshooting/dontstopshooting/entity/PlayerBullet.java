@@ -50,8 +50,8 @@ public class PlayerBullet extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        super.render(batch);
         float angle = this.velocity.angleDeg();
         batch.draw(sprite, location.x, location.y, 2.0f, 3.0f, 4.0f, 6.0f, 1.0f, 1.0f, angle - 90.0f);
+        super.render(batch);
     }
 }

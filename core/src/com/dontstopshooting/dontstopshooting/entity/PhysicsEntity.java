@@ -3,22 +3,38 @@ package com.dontstopshooting.dontstopshooting.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class PhysicsEntity extends Entity {
     public static final float gravity = 175;
     public static final float bouncyRate = 0.22f;
 
+    public static class ForceComp {
+        public Vector2 vec;
+
+        public ForceComp(Vector2 vec) {
+            this.vec = vec;
+        }
+    }
+
     protected final Vector2 velocity = new Vector2();
-    private final Vector2 acceleration = Vector2.Zero;
-    protected boolean hasGravity = true;
+    protected ForceComp gravityForce = new ForceComp(new Vector2(0, -gravity));
+
+    protected List<ForceComp> forces = new ArrayList<>();
 
     public PhysicsEntity(GameScreen screen, Vector2 location) {
         super(screen, location);
+        forces.add(gravityForce);
     }
 
     @Override
     public void tick() {
-        if (hasGravity) acceleration.set(0, -gravity);
-        else acceleration.setZero();
+        Vector2 acceleration = new Vector2();
+        for (ForceComp force : forces) {
+            acceleration.add(force.vec);
+        }
+        acceleration.scl(1);
         Vector2 dv = acceleration.cpy().scl(GameScreen.SPT);
         Vector2 dx = velocity.cpy().scl(GameScreen.SPT).add(dv.cpy().scl(0.5f * GameScreen.SPT));
         velocity.add(dv);
@@ -45,7 +61,7 @@ public abstract class PhysicsEntity extends Entity {
                     location.add(0, Math.signum(dx.y));
                 }
                 location.add(0, -Math.signum(dx.y));
-                if (hasGravity && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
+                if (!gravityForce.vec.isZero() && Math.abs(velocity.y) >= 3) velocity.y *= -bouncyRate;
                 else velocity.y = 0;
             }
         }

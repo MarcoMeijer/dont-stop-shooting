@@ -53,7 +53,7 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
         hitBox.height = 11;
         hitBox.offset.set(4, 5);
 
-        hasGravity = false;
+        gravityForce.vec.setZero();
         this.vertical = vertical;
         if (vertical) velocity.set(0, direction*speed);
         else velocity.set(direction*speed, 0);

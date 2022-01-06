@@ -9,7 +9,7 @@ public abstract class Entity {
 
     protected final GameScreen screen;
     public Vector2 location;
-    public HitBox hitBox;
+    public final HitBox hitBox;
 
     public Entity(GameScreen screen, Vector2 location) {
         screen.newEntities.add(this);
