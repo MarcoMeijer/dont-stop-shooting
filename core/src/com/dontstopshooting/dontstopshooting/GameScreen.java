@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.Entity;
 import com.dontstopshooting.dontstopshooting.entity.Missile;
 import com.dontstopshooting.dontstopshooting.entity.Player;
+import com.dontstopshooting.dontstopshooting.ui.DebugUI;
 import com.dontstopshooting.dontstopshooting.ui.GameUi;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 import com.dontstopshooting.dontstopshooting.utils.ParticleHandler;
@@ -46,6 +47,7 @@ public class GameScreen implements Screen {
     public final Set<Entity> oldEntities = new HashSet<>();
 
     public boolean debugMode = false;
+    public boolean hitBoxes = false;
     private float time;
     private long tick = 0;
     public OrthographicCamera camera;
@@ -55,10 +57,12 @@ public class GameScreen implements Screen {
     public Player player;
     public Stage stage;
     public GameUi ui;
+    public DebugUI debugUi;
+    public SpriteBatch batch;
     public int highScore = 0;
 
     static {
-        PixmapPacker packer = new PixmapPacker(2048, 2048, Pixmap.Format.RGBA8888, 2, true);
+        PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
         packer.pack("player1", new Pixmap(Gdx.files.internal("player1.png")));
         packer.pack("player2", new Pixmap(Gdx.files.internal("player2.png")));
@@ -111,7 +115,11 @@ public class GameScreen implements Screen {
         backgroundScroller = new BackgroundScroller();
         stage = new Stage();
         ui = new GameUi(skin, this);
+        debugUi = new DebugUI(skin, this);
+        debugUi.setVisible(false);
+        stage.addActor(debugUi);
         stage.addActor(ui);
+        batch = new SpriteBatch();
         restart();
     }
 
@@ -151,12 +159,17 @@ public class GameScreen implements Screen {
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) restart();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) debugMode = !debugMode;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
+            debugMode = !debugMode;
+            debugUi.setVisible(debugMode);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
+            hitBoxes = !hitBoxes;
+        }
 
         ui.update();
 
         ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
-        SpriteBatch batch = new SpriteBatch();
         batch.begin();
 
         batch.setProjectionMatrix(screenCamera.combined);
@@ -173,12 +186,11 @@ public class GameScreen implements Screen {
         // render particles
         batch.setProjectionMatrix(camera.combined);
         particles.draw(batch, delta);
-        batch.end();
+        batch.flush();
 
         frameBuffer.end();
 
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.begin();
         batch.setProjectionMatrix(screenCamera.combined);
         Texture frameTexture = frameBuffer.getColorBufferTexture();
         frameTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -191,6 +203,7 @@ public class GameScreen implements Screen {
         batch.end();
         stage.act(delta);
         stage.draw();
+        debugUi.update();
     }
 
     @Override

@@ -23,8 +23,8 @@ public class Missile extends PhysicsEntity implements BulletHittable {
 
         gravityForce.vec.setZero();
 
-        this.hitBox.width = 12;
-        this.hitBox.height = 12;
+        this.hitBox.width = 6;
+        this.hitBox.height = 6;
 
         velocity.set(vec.cpy().scl(speed));
     }
@@ -52,8 +52,8 @@ public class Missile extends PhysicsEntity implements BulletHittable {
     @Override
     public void render(SpriteBatch batch) {
         float angle = this.velocity.angleDeg();
-        batch.draw(texture, hitBox.getCenter().x-16, hitBox.getCenter().y-8, 16.0f, 8.0f, 32.0f, 16.0f, 1.0f, 1.0f, angle + 180.0f);
-        Vector2 vec = velocity.cpy().nor().scl(-12).add(hitBox.getCenter());
+        batch.draw(texture, hitBox.getCenter().x-8, hitBox.getCenter().y-4, 8.0f, 4.0f, 16.0f, 9.0f, 1.0f, 1.0f, angle + 180.0f);
+        Vector2 vec = velocity.cpy().nor().scl(-7).add(hitBox.getCenter());
         GameScreen.particles.createGunExplosion(vec.x, vec.y);
         super.render(batch);
     }

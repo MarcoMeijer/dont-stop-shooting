@@ -37,10 +37,10 @@ public class HitBox {
     }
 
     public boolean intersect(HitBox other) {
-        return ((      getRealLocation().x <= other.getRealLocation().x && other.getRealLocation().x <=       getRealLocation().x + width) ||
-                (other.getRealLocation().x <=       getRealLocation().x &&       getRealLocation().x <= other.getRealLocation().x + width)) &&
-               ((      getRealLocation().y <= other.getRealLocation().y && other.getRealLocation().y <=       getRealLocation().y + height) ||
-                (other.getRealLocation().y <=       getRealLocation().y &&       getRealLocation().y <= other.getRealLocation().y + height));
+        return ((      getRealLocation().x <= other.getRealLocation().x && other.getRealLocation().x <=       getRealLocation().x +       width) ||
+                (other.getRealLocation().x <=       getRealLocation().x &&       getRealLocation().x <= other.getRealLocation().x + other.width)) &&
+               ((      getRealLocation().y <= other.getRealLocation().y && other.getRealLocation().y <=       getRealLocation().y +       height) ||
+                (other.getRealLocation().y <=       getRealLocation().y &&       getRealLocation().y <= other.getRealLocation().y + other.height));
     }
 
     public static boolean intersect(HitBox a, HitBox b) {

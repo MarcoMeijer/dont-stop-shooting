@@ -19,6 +19,7 @@ public class LevelMap {
     public final TiledMap map;
     private OrthoCachedTiledMapRenderer renderer;
     private final float offset;
+    public boolean hasChanged = false;
 
     public LevelMap(GameScreen screen, String levelName, float offset) {
         this.screen = screen;
@@ -30,6 +31,10 @@ public class LevelMap {
     public void render(OrthographicCamera camera) {
         camera.translate(-offset, 0.0f);
         camera.update();
+        if (hasChanged) {
+            renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
+            hasChanged = false;
+        }
         renderer.setBlending(true);
         renderer.setView(camera);
         renderer.render();
@@ -101,7 +106,7 @@ public class LevelMap {
             boolean destructible = tileProperties.get("destructible", Boolean.class);
             if (destructible) {
                 tileLayer.setCell(point.x, point.y, new TiledMapTileLayer.Cell());
-                renderer = new OrthoCachedTiledMapRenderer(map, 1.0f);
+                hasChanged = true;
                 GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);
                 GameScreen.particles.createWood(offset + point.x*16.0f, point.y*16.0f);
                 screen.playerCamera.shake(1.0f);

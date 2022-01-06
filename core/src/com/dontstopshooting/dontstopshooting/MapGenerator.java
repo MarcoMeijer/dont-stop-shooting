@@ -89,6 +89,7 @@ public class MapGenerator {
         if (screen.player.location.x + GameScreen.gameWidth >= levels.size()*512.0f) {
             Random random = new Random();
             int rng = random.nextInt(4);
+            rng = 2;
             if (rng == 0)
                 addLevel("level2.tmx");
             if (rng == 1)

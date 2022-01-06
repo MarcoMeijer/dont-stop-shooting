@@ -23,8 +23,8 @@ public class TextEntity extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         super.render(batch);
-        Label label = new Label(text, screen.ui.getSkin());
-        label.setPosition(location.x, location.y);
-        label.draw(batch, 1.0f);
+//        Label label = new Label(text, screen.ui.getSkin());
+//        label.setPosition(location.x, location.y);
+//        label.draw(batch, 1.0f);
     }
 }

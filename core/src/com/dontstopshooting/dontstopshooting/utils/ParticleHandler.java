@@ -15,7 +15,8 @@ import java.util.Map;
 public class ParticleHandler {
 
     private final Map<String, ParticleEffectPool> pools = new HashMap<>();
-    private final List<ParticleEffectPool.PooledEffect> effects = new ArrayList<>();
+    private final List<ParticleEffectPool.PooledEffect> additiveEffects = new ArrayList<>();
+    private final List<ParticleEffectPool.PooledEffect> otherEffects = new ArrayList<>();
 
     public ParticleHandler() {
         createPool("explosion");
@@ -35,36 +36,52 @@ public class ParticleHandler {
     public void createExplosion(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("explosion").obtain();
         effect.setPosition(x, y);
-        effects.add(effect);
+        effect.setEmittersCleanUpBlendFunction(false);
+        effect.start();
+        additiveEffects.add(effect);
     }
 
     public void createGunExplosion(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("gun").obtain();
         effect.setPosition(x, y);
-        effects.add(effect);
+        effect.setEmittersCleanUpBlendFunction(false);
+        effect.start();
+        additiveEffects.add(effect);
     }
 
     public void createBullet(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("bullet").obtain();
         effect.setPosition(x, y);
-        effects.add(effect);
+        effect.setEmittersCleanUpBlendFunction(false);
+        effect.start();
+        otherEffects.add(effect);
     }
 
     public void createWood(float x, float y) {
         ParticleEffectPool.PooledEffect effect = pools.get("wood").obtain();
         effect.setPosition(x, y);
-        effects.add(effect);
+        effect.setEmittersCleanUpBlendFunction(false);
+        effect.start();
+        otherEffects.add(effect);
     }
 
     public void draw(SpriteBatch batch, float delta) {
-        for (int i = effects.size() - 1; i >= 0; i--) {
-            ParticleEffectPool.PooledEffect effect = effects.get(i);
+        for (int i = additiveEffects.size() - 1; i >= 0; i--) {
+            ParticleEffectPool.PooledEffect effect = additiveEffects.get(i);
             effect.draw(batch, delta);
             if (effect.isComplete()) {
                 effect.free();
-                effects.remove(i);
+                additiveEffects.remove(i);
             }
         }
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        for (int i = otherEffects.size() - 1; i >= 0; i--) {
+            ParticleEffectPool.PooledEffect effect = otherEffects.get(i);
+            effect.draw(batch, delta);
+            if (effect.isComplete()) {
+                effect.free();
+                otherEffects.remove(i);
+            }
+        }
     }
 }
