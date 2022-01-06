@@ -62,6 +62,7 @@ public class GameScreen implements Screen {
     public int highScore = 0;
 
     public boolean musicMute = false;
+    public boolean keyboardControls = false;
 
     static {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);

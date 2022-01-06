@@ -50,7 +50,25 @@ public class Player extends PhysicsEntity implements Explosive {
         super.tick();
         velocity.scl(0.995f);
         invincibility -= GameScreen.SPT;
-        if (screen.getTick() % ((GameScreen.TPS*60)/((Gdx.input.isButtonPressed(Input.Buttons.LEFT) ? rpm*2 : rpm))) == 0) {
+
+        if (screen.keyboardControls) {
+            rpm = Gdx.input.isKeyPressed(Input.Keys.E) ? 960 : 480;
+
+            int x = 0;
+            int y = 0;
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) x--;
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) x++;
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) y--;
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) y++;
+            if (x == 0 && y == 0) y = -1;
+            cursor = new Vector2(x, y).nor();
+        } else {
+            rpm = Gdx.input.isButtonPressed(Input.Buttons.LEFT) ? 960 : 480;
+            Vector3 screenCoords = screen.camera.project(new Vector3(location.x + 8, location.y + 8, 0));
+            cursor = new Vector2(-screenCoords.x + Gdx.input.getX(), Gdx.graphics.getHeight() - screenCoords.y - Gdx.input.getY()).nor();
+        }
+
+        if (screen.getTick() % ((GameScreen.TPS*60)/rpm) == 0) {
             shoot(cursor);
         }
 
@@ -65,8 +83,6 @@ public class Player extends PhysicsEntity implements Explosive {
 
     @Override
     public void render(SpriteBatch batch) {
-        Vector3 screenCoords = screen.camera.project(new Vector3(location.x + 8, location.y + 8, 0));
-        cursor = new Vector2(-screenCoords.x + Gdx.input.getX(), Gdx.graphics.getHeight() - screenCoords.y - Gdx.input.getY()).nor();
 
         float angle = (450.0f - cursor.angleDeg())%360.0f;
 
