@@ -22,4 +22,9 @@ public class BackgroundMusic {
             start.dispose();
         }
     }
+
+    public void setMute(boolean musicMute) {
+        start.setVolume(musicMute? 0: 1);
+        end.setVolume(musicMute? 0: 1);
+    }
 }

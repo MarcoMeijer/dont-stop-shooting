@@ -61,6 +61,7 @@ public class GameScreen implements Screen {
     public int highScore = 0;
 
     public BackgroundMusic music;
+    public boolean musicMute = false;
 
     static {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);
@@ -197,6 +198,10 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
             hitBoxes = !hitBoxes;
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            musicMute = !musicMute;
+            music.setMute(musicMute);
+        }
 
         ui.update();
 
@@ -275,6 +280,7 @@ public class GameScreen implements Screen {
         ui.player = player;
         if (music != null) {
             music.destroy();
+            music.setMute(musicMute);
         }
         music = new BackgroundMusic();
     }
