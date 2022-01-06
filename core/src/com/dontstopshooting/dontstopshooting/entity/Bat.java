@@ -12,6 +12,7 @@ import com.dontstopshooting.dontstopshooting.GameScreen;
 public class Bat extends PhysicsEntity implements Explosive, BulletHittable, PlayerCollidable {
     public static final float speed = 20;
     public static final int startHealth = 6;
+    public static final float otherAxisDecay = 0.995f;
 
     private final boolean vertical;
     private float direction = 1;
@@ -63,10 +64,16 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
     public void tick() {
         super.tick();
 
-        if (velocity.x == 0 && velocity.y == 0) direction *= -1;
+        if ((vertical? velocity.y: velocity.x) == 0) direction *= -1;
 
-        if (vertical) velocity.y = direction*speed;
-        else velocity.x = direction*speed;
+        float goal = direction*speed;
+        if (vertical) {
+            velocity.y += (goal - velocity.y) / GameScreen.TPS;
+            velocity.x *= otherAxisDecay;
+        } else {
+            velocity.x += (goal - velocity.x) / GameScreen.TPS;
+            velocity.y *= otherAxisDecay;
+        }
     }
 
     @Override

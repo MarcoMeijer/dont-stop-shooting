@@ -18,7 +18,7 @@ public abstract class PhysicsEntity extends Entity {
         }
     }
 
-    protected final Vector2 velocity = new Vector2();
+    public final Vector2 velocity = new Vector2();
     protected ForceComp gravityForce = new ForceComp(new Vector2(0, -gravity));
 
     protected List<ForceComp> forces = new ArrayList<>();
