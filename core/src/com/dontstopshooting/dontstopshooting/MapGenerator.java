@@ -86,7 +86,7 @@ public class MapGenerator {
     }
 
     public void render(OrthographicCamera camera) {
-        if (screen.player.location.x + 300.0f >= levels.size()*512.0f) {
+        if (screen.player.location.x + GameScreen.gameWidth >= levels.size()*512.0f) {
             Random random = new Random();
             int rng = random.nextInt(4);
             if (rng == 0)
