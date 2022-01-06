@@ -61,7 +61,6 @@ public class GameScreen implements Screen {
     public SpriteBatch batch;
     public int highScore = 0;
 
-    public BackgroundMusic music;
     public boolean musicMute = false;
 
     static {
@@ -201,7 +200,7 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             musicMute = !musicMute;
-            music.setMute(musicMute);
+            BackgroundMusic.setMute(musicMute);
         }
 
         ui.update();
@@ -242,7 +241,7 @@ public class GameScreen implements Screen {
         stage.draw();
         debugUi.update();
 
-        music.update();
+        BackgroundMusic.update();
     }
 
     @Override
@@ -279,10 +278,7 @@ public class GameScreen implements Screen {
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;
         ui.player = player;
-        if (music != null) {
-            music.destroy();
-        }
-        music = new BackgroundMusic();
-        music.setMute(musicMute);
+        BackgroundMusic.begin();
+        BackgroundMusic.setMute(musicMute);
     }
 }

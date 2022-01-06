@@ -2,28 +2,27 @@ package com.dontstopshooting.dontstopshooting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 
 public class BackgroundMusic {
-    private final Music start = Gdx.audio.newMusic(Gdx.files.internal("soundstart.mp3")), end = Gdx.audio.newMusic(Gdx.files.internal("soundend.mp3"));
+    private static final FileHandle s = Gdx.files.internal("soundstart.mp3"), e = Gdx.files.internal("soundend.mp3");
+    private static final Music start = Gdx.audio.newMusic(s), end = Gdx.audio.newMusic(e);
 
-    public void destroy() {
-        start.dispose();
-        end.dispose();
-    }
+    public static void begin() {
+        start.stop();
+        end.stop();
 
-    public BackgroundMusic() {
         start.play();
     }
 
-    public void update() {
+    public static void update() {
         if (!start.isPlaying() && !end.isPlaying()) {
             end.play();
             end.setLooping(true);
-            start.dispose();
         }
     }
 
-    public void setMute(boolean musicMute) {
+    public static void setMute(boolean musicMute) {
         start.setVolume(musicMute? 0: 1);
         end.setVolume(musicMute? 0: 1);
     }
