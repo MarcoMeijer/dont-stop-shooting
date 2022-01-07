@@ -15,7 +15,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     public static final int randomJump = (int) (7*GameScreen.TPS);
     public static final int preJumpTime = (int) (0.4f*GameScreen.TPS);
     private static final int maxFuseTime = (int) GameScreen.TPS;
-    private static final float explosionRadius = 70;
+    private static final float explosionRadius = 64;
 
     enum State {
         WALKING,

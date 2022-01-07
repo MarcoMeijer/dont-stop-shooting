@@ -27,7 +27,7 @@ public class Player extends PhysicsEntity implements Explosive {
         super(screen, loc);
         hitBox.offset.x = 5;
         hitBox.width = 5;
-        hitBox.height = 15;
+        hitBox.height = 14;
         health = 3;
         score = 0;
     }
@@ -52,14 +52,14 @@ public class Player extends PhysicsEntity implements Explosive {
         invincibility -= GameScreen.SPT;
 
         if (screen.keyboardControls) {
-            rpm = Gdx.input.isKeyPressed(Input.Keys.E) ? 960 : 480;
+            rpm = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 960 : 480;
 
             int x = 0;
             int y = 0;
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) x--;
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) x++;
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) y--;
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) y++;
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) x++;
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) x--;
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) y++;
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) y--;
             if (x == 0 && y == 0) y = -1;
             cursor = new Vector2(x, y).nor();
         } else {
