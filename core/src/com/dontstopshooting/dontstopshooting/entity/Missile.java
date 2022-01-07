@@ -55,8 +55,6 @@ public class Missile extends PhysicsEntity implements BulletHittable {
                 }
 
                 float realAcc = Math.signum(velocity.cpy().crs(vecToTarget)) * rotationAcc;
-                velocity.nor();
-                velocity.scl(speed);
                 spawned = true;
                 float drs = realAcc * GameScreen.SPT;
                 float dr = rotationSpeed * GameScreen.SPT + drs * 0.5f * GameScreen.SPT;
