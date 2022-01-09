@@ -177,16 +177,16 @@ public class GameScreen implements Screen {
         while (time >= SPT) {
             tick++;
             for (Entity entity : newEntities.toArray(new Entity[0])) {
-                if (entity.location.x >= playerCamera.startX - spawnRadius) {
+                if (entity.hitBox.getCenter().x >= playerCamera.startX - spawnRadius) {
                     entities.add(entity);
                     newEntities.remove(entity);
                     entity.onSpawn();
-                } if (entity.location.x <= playerCamera.startX - despawnRadius) newEntities.remove(entity);
+                } if (entity.hitBox.getCenter().x <= playerCamera.startX - despawnRadius) newEntities.remove(entity);
             }
             entities.removeAll(oldEntities);
             oldEntities.clear();
             for (Entity entity : entities) {
-                if (entity.location.x <= playerCamera.startX - despawnRadius) entity.destroy();
+                if (entity.hitBox.getCenter().x <= playerCamera.startX - despawnRadius) entity.destroy();
                 else entity.tick();
             }
 
