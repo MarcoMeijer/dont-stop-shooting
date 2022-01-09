@@ -37,6 +37,9 @@ public class GameScreen implements Screen {
     public final static Skin skin;
     public MapGenerator mapGenerator;
 
+    public static final float spawnRadius = 250;
+    public static final float despawnRadius = 300;
+
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
     public final static TextureAtlas atlas;
@@ -173,12 +176,17 @@ public class GameScreen implements Screen {
         time += delta;
         while (time >= SPT) {
             tick++;
-            entities.addAll(newEntities);
+            for (Entity entity : newEntities.toArray(new Entity[0])) {
+                if (entity.location.x >= playerCamera.startX - spawnRadius) {
+                    entities.add(entity);
+                    newEntities.remove(entity);
+                    entity.onSpawn();
+                } if (entity.location.x <= playerCamera.startX - despawnRadius) newEntities.remove(entity);
+            }
             entities.removeAll(oldEntities);
-            newEntities.clear();
             oldEntities.clear();
             for (Entity entity : entities) {
-                if (entity.location.x <= playerCamera.startX - 300f) entity.destroy();
+                if (entity.location.x <= playerCamera.startX - despawnRadius) entity.destroy();
                 else entity.tick();
             }
 

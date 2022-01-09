@@ -18,6 +18,9 @@ public abstract class Entity {
         this.hitBox = new HitBox(location, new Vector2(0.0f, 0.0f), 0.0f, 0.0f);
     }
 
+    public void onSpawn() {
+    }
+
     public abstract void tick();
 
     public void render(SpriteBatch batch) {
