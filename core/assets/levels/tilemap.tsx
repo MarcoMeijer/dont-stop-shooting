@@ -205,7 +205,8 @@
  </tile>
  <tile id="38">
   <properties>
-   <property name="collision" type="bool" value="false"/>
+   <property name="collision" type="bool" value="true"/>
+   <property name="entity" value="launcher"/>
   </properties>
  </tile>
  <tile id="39">
