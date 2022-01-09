@@ -58,6 +58,11 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     public void explode() {
         destroy();
         screen.explosion(hitBox.getCenter(), explosionRadius, 20000);
+        if (velocity.y < -0.1f) {
+            screen.createPoints(hitBox.getCenter(), 2000);
+        } else {
+            screen.createPoints(hitBox.getCenter(), 500);
+        }
     }
 
     @Override

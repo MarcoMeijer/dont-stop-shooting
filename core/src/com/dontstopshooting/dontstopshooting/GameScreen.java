@@ -84,6 +84,9 @@ public class GameScreen implements Screen {
             packer.pack("bat"+i, new Pixmap(Gdx.files.internal("bat"+i+".png")));
             packer.pack("batdamage"+i, new Pixmap(Gdx.files.internal("batdamage"+i+".png")));
         }
+        for (int i=0; i<=9; i++) {
+            packer.pack("number"+i, new Pixmap(Gdx.files.internal("number"+i+".png")));
+        }
         packer.pack("bomb1", new Pixmap(Gdx.files.internal("bomb1.png")));
         packer.pack("bomb2", new Pixmap(Gdx.files.internal("bomb2.png")));
         packer.pack("bomb3", new Pixmap(Gdx.files.internal("bomb3.png")));
@@ -135,6 +138,11 @@ public class GameScreen implements Screen {
 
     public boolean collisionCheck(HitBox hitBox) {
         return mapGenerator.collisionCheck(hitBox);
+    }
+
+    public void createPoints(Vector2 location, int amount) {
+        player.score += amount;
+        new TextEntity(((Integer) amount).toString(), this, location);
     }
 
     public void explosion(Vector2 location, float radius, float blast) {

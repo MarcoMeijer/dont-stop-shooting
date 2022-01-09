@@ -110,6 +110,7 @@ public class LevelMap {
                 hasChanged = true;
                 GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);
                 GameScreen.particles.createWood(offset + point.x*16.0f, point.y*16.0f);
+                screen.createPoints(new Vector2(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f), 50);
                 screen.playerCamera.shake(1.0f);
             }
         }
