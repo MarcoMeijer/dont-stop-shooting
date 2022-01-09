@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.Sounds;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
@@ -33,6 +34,7 @@ public class Player extends PhysicsEntity implements Explosive {
     }
 
     public void shoot(Vector2 vec) {
+        Sounds.gun.play();
         Vector2 bulletLocation = location.cpy().add(8, 8);
         bulletLocation.add(vec.cpy().scl(9f));
         new PlayerBullet(screen, bulletLocation.cpy(), vec);

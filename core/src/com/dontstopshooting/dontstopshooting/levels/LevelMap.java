@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.Sounds;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class LevelMap {
@@ -106,6 +107,7 @@ public class LevelMap {
                 continue;
             boolean destructible = tileProperties.get("destructible", Boolean.class);
             if (destructible) {
+                Sounds.wood.play();
                 tileLayer.setCell(point.x, point.y, new TiledMapTileLayer.Cell());
                 hasChanged = true;
                 GameScreen.particles.createGunExplosion(offset + point.x*16.0f + 8.0f, point.y*16.0f + 8.0f);

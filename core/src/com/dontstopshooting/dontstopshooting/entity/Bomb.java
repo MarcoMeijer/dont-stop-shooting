@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.Sounds;
 
 import java.util.Random;
 
@@ -32,6 +33,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     private int preJumpTimer = -1;
     private State state = State.WALKING;
     private boolean direction;
+    private Sounds.SoundEffect.SoundID sound;
 
     public Bomb(GameScreen screen, Vector2 location) {
         super(screen, location);
@@ -57,6 +59,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
 
     public void explode() {
         destroy();
+        Sounds.fuse.stop(sound);
         screen.explosion(hitBox.getCenter(), explosionRadius, 20000);
         if (velocity.y < -0.1f) {
             screen.createPoints(hitBox.getCenter(), 2000);
@@ -71,6 +74,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
         fuseTimer = (int) (GameScreen.TPS*(0.6 + new Random().nextFloat()*0.35f));
         velocity.x = 0;
         state = State.FUSING;
+        sound = Sounds.fuse.play();
     }
 
     @Override
@@ -142,5 +146,6 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
         fuseTimer = (int) (GameScreen.TPS*(0.4 + new Random().nextFloat()*0.1f));
         velocity.x = 0;
         state = State.FUSING;
+        sound = Sounds.fuse.play();
     }
 }

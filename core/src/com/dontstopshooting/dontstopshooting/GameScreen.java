@@ -148,6 +148,7 @@ public class GameScreen implements Screen {
 
     public void explosion(Vector2 location, float radius, float blast) {
         GameScreen.particles.createExplosion(location.x, location.y);
+        Sounds.explosion.play();
         playerCamera.shake(8.0f);
 
         float radius2 = radius*radius;
