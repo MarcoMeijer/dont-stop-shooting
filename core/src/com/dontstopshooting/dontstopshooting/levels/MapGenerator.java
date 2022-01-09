@@ -12,10 +12,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.dontstopshooting.dontstopshooting.GameScreen;
-import com.dontstopshooting.dontstopshooting.entity.Bat;
-import com.dontstopshooting.dontstopshooting.entity.Bomb;
-import com.dontstopshooting.dontstopshooting.entity.BulletPowerUp;
-import com.dontstopshooting.dontstopshooting.entity.Missile;
+import com.dontstopshooting.dontstopshooting.entity.*;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 import java.util.ArrayList;
@@ -93,6 +90,10 @@ public class MapGenerator {
                     }
                     if (entityName.equals("missile")) {
                         new Missile(screen, new Vector2(offset + x*16.0f+4, y*16.0f), new Vector2(0, 1), screen.player);
+                        cell.setTile(null);
+                    }
+                    if (entityName.equals("launcher")) {
+                        new MissileLauncher(screen, new Vector2(offset + x*16.0f, y*16.0f));
                         cell.setTile(null);
                     }
                 }
