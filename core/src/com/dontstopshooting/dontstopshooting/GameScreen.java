@@ -221,6 +221,7 @@ public class GameScreen implements Screen {
             musicMute = !musicMute;
             BackgroundMusic.setMute(musicMute);
         }
+        BackgroundMusic.setMute(musicMute || player.health == 0);
 
         ui.update();
 
@@ -234,7 +235,6 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 0.0f);
 
         playerCamera.update();
-
 
         mapGenerator.render(camera);
 
