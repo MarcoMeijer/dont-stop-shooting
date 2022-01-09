@@ -7,17 +7,32 @@
   },
   {
     "levels": [
-      "level2",
-      "level3",
-      "level4",
-      "level5",
-      "level6",
-      "level7",
-      "level8",
-      "level9",
-      "level10",
-      "level11"
+      "level2-a",
+      "level2-a-flipped",
+      "level2-b",
+      "level2-b-flipped"
     ],
-    "repeat": [5,5]
+    "repeat": [2,3]
+  },
+  {
+    "levels": [
+      "level3-a",
+      "level3-b",
+      "level3-b-flipped"
+    ],
+    "repeat": [2,4]
+  },
+  {
+    "levels": [
+      "level4-a",
+      "level4-b"
+    ],
+    "repeat": [5,10]
+  },
+  {
+    "levels": [
+      "level5-a"
+    ],
+    "repeat": [1,1]
   }
 ]
