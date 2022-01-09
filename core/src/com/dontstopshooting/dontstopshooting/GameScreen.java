@@ -284,7 +284,6 @@ public class GameScreen implements Screen {
         newEntities.clear();
         oldEntities.clear();
         player = new Player(this, new Vector2(200.0f, 150.0f));
-        //new MissileLauncher(this, player.location.cpy().add(100, 0));
         mapGenerator = new MapGenerator(this);
         playerCamera = new PlayerCamera(this, player);
         camera = playerCamera.camera;
