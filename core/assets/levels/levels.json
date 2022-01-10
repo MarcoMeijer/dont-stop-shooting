@@ -10,9 +10,12 @@
       "level2-a",
       "level2-a-flipped",
       "level2-b",
-      "level2-b-flipped"
+      "level2-b-flipped",
+      "level2-c",
+      "level2-d",
+      "level2-e"
     ],
-    "repeat": [2,3]
+    "repeat": [3,5]
   },
   {
     "levels": [

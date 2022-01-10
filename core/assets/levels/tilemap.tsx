@@ -245,6 +245,7 @@
   <properties>
    <property name="collision" type="bool" value="false"/>
    <property name="deadly" type="bool" value="false"/>
+   <property name="entity" value="launcher"/>
   </properties>
  </tile>
  <tile id="39">
