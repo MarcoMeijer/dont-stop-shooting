@@ -27,14 +27,14 @@ public class BulletPowerUp extends Entity implements PlayerCollidable {
     public void render(SpriteBatch batch) {
         super.render(batch);
 
-        time += Gdx.graphics.getDeltaTime(); // todo modulo
+        time += Gdx.graphics.getDeltaTime();
         int x = (int)location.x, y = (int)location.y;
         batch.draw(sprite, x, y + (float) (Math.sin(time*6.0f)*2.0f));
     }
 
     @Override
     public void onCollide(Player player) {
-        player.bullets += 25;
+        player.bullets += 20;
         this.destroy();
         Sounds.bulletPickUp.play();
         screen.createPoints(hitBox.getCenter(), 100);
