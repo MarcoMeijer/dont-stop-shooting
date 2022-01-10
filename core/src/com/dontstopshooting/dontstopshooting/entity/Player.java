@@ -13,7 +13,7 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
     public enum DamageCause {
-        AMMO("You are out of ammo"),
+        AMMO("You ran out of ammo"),
         FELL_PIT("You fell into a dark pit"),
         LEFT_WALL("You were too slow"),
         BAT("You caught COVID-19 from a bat"),
