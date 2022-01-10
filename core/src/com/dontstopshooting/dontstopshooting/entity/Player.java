@@ -123,6 +123,7 @@ public class Player extends PhysicsEntity implements Explosive {
     public void kill() {
         destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
+        Sounds.gameOver.play();
         this.health = 0;
     }
 }

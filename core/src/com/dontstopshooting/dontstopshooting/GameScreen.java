@@ -108,6 +108,7 @@ public class GameScreen implements Screen {
         packer.pack("bigbullet", new Pixmap(Gdx.files.internal("bigbullet.png")));
         packer.pack("missile", new Pixmap(Gdx.files.internal("missile.png")));
         packer.pack("launcher", new Pixmap(Gdx.files.internal("launcher.png")));
+        packer.pack("logo", new Pixmap(Gdx.files.internal("logo.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();

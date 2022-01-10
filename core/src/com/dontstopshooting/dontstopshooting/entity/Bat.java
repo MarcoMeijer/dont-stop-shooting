@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.Sounds;
 
 public class Bat extends PhysicsEntity implements Explosive, BulletHittable, PlayerCollidable {
     public static final float speed = 20;
@@ -92,6 +93,7 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
 
     public void kill() {
         destroy();
+        Sounds.batDie.play();
         screen.createPoints(hitBox.getCenter(), 500);
         GameScreen.particles.createGunExplosion(hitBox.getCenter().x, hitBox.getCenter().y);
     }
@@ -100,6 +102,9 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
     public void onHit() {
         damageTime = 0.07f;
         if (--health == 0) kill();
+        else {
+            Sounds.batDamage.play();
+        }
     }
 
     @Override

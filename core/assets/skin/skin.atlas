@@ -6,8 +6,15 @@ filter: Linear, Linear
 repeat: none
 Kenney Mini(2)
   rotate: false
-  xy: 1, 405
+  xy: 1, 271
   size: 505, 99
   orig: 505, 99
+  offset: 0, 0
+  index: -1
+Kenney Thick(1)
+  rotate: false
+  xy: 1, 372
+  size: 506, 133
+  orig: 506, 133
   offset: 0, 0
   index: -1

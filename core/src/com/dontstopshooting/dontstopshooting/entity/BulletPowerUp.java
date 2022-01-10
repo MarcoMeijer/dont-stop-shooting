@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
+import com.dontstopshooting.dontstopshooting.Sounds;
 
 public class BulletPowerUp extends Entity implements PlayerCollidable {
 
@@ -35,6 +36,7 @@ public class BulletPowerUp extends Entity implements PlayerCollidable {
     public void onCollide(Player player) {
         player.bullets += 25;
         this.destroy();
+        Sounds.bulletPickUp.play();
         screen.createPoints(hitBox.getCenter(), 100);
     }
 }
