@@ -161,7 +161,7 @@ public class GameScreen implements Screen {
                 if (e instanceof PhysicsEntity) {
                     PhysicsEntity physicsEntity = (PhysicsEntity)e;
                     Vector2 vec = physicsEntity.hitBox.getCenter().sub(location);
-                    Vector2 blastForce = vec.cpy().nor().scl(blast/vec.len2());
+                    Vector2 blastForce = vec.cpy().nor().scl(Math.min(blast/vec.len2(), blast/8));
                     //System.out.println(blastForce);
                     physicsEntity.velocity.add(blastForce);
                 }
@@ -188,7 +188,7 @@ public class GameScreen implements Screen {
         while (time >= SPT) {
             tick++;
             for (Entity entity : newEntities.toArray(new Entity[0])) {
-                if (entity.hitBox.getCenter().x >= playerCamera.startX - spawnRadius) {
+                if (Math.abs(entity.hitBox.getCenter().x - playerCamera.startX) <= spawnRadius) {
                     entities.add(entity);
                     newEntities.remove(entity);
                     entity.onSpawn();
