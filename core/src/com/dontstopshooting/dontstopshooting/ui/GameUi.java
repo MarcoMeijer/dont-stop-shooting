@@ -1,6 +1,7 @@
 package com.dontstopshooting.dontstopshooting.ui;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,12 +13,16 @@ import com.dontstopshooting.dontstopshooting.entity.Player;
 
 public class GameUi extends Table {
 
+    public static final float ammoBlingFrequency = 0.6f;
+
     public Player player;
     private final Image healthBar;
     private final Label scoreLabel;
     private final Label ammoLabel;
     private final Label highScoreLabel;
     private final GameScreen screen;
+
+    private float time = 0;
 
     public GameUi(Skin skin, GameScreen screen) {
         super(skin);
@@ -52,10 +57,20 @@ public class GameUi extends Table {
         this.add(highScoreLabel).bottom().right().pad(8.0f).expand();
     }
 
-    public void update() {
+    public void update(float dt) {
         this.healthBar.setDrawable(new SpriteDrawable(new Sprite(GameScreen.atlas.findRegion("healthbar"+player.health))));
         scoreLabel.setText(String.format("SCORE: %09d", player.score));
         highScoreLabel.setText(String.format("HIGHSCORE: %09d", screen.highScore));
+        if (player.bullets < 100) {
+            time += dt;
+            Color c;
+            if (time % ammoBlingFrequency < ammoBlingFrequency/2) c = Color.WHITE;
+            else c = Color.RED;
+            ammoLabel.setColor(c);
+        } else {
+            time = 0;
+            ammoLabel.setColor(Color.WHITE);
+        }
         ammoLabel.setText(String.format("%04dx", player.bullets));
     }
 }

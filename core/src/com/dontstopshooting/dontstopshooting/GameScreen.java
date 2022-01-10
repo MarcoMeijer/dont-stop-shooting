@@ -63,10 +63,8 @@ public class GameScreen implements Screen {
     public Stage stage;
     public GameUi ui;
     public DebugUI debugUi;
-    public GameOverUI gameOverUI;
     public SpriteBatch batch;
     public int highScore = 0;
-    public Game game;
 
     public boolean musicMute = false;
     public boolean keyboardControls = false;
@@ -242,7 +240,7 @@ public class GameScreen implements Screen {
             stage.addActor(gameOverUI);
         }
 
-        ui.update();
+        ui.update(delta);
 
         // rendering
         ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
