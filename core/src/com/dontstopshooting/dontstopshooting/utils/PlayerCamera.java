@@ -31,7 +31,7 @@ public class PlayerCamera {
         shakeFactor *= 0.95f;
 
         if (player.health > 0) {
-            startX = Math.max(startX, startX + Gdx.graphics.getDeltaTime()*32.0f);
+            startX = Math.max(startX, startX + Gdx.graphics.getDeltaTime()*25.0f);
             startX = Math.max(startX, player.location.x + player.texture.getRegionWidth()/2f - GameScreen.gameWidth/4.0f);
             if (player.location.x <= startX - GameScreen.gameWidth/2.0f) {
                 player.kill();

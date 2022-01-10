@@ -2,6 +2,9 @@
 "com.badlogic.gdx.graphics.g2d.BitmapFont": {
 	"Kenney_Mini": {
 		"file": "Kenney Mini(2).fnt"
+	},
+	"Kenney_Thick": {
+		"file": "Kenney Thick(1).fnt"
 	}
 },
 "com.badlogic.gdx.graphics.Color": {
@@ -9,6 +12,18 @@
 		"r": 0,
 		"g": 0,
 		"b": 0,
+		"a": 1
+	},
+	"RGBA_247_189_151_255": {
+		"r": 1,
+		"g": 0.98607516,
+		"b": 0.81,
+		"a": 1
+	},
+	"RGBA_255_172_68_255": {
+		"r": 1,
+		"g": 0.6776644,
+		"b": 0.26999998,
 		"a": 1
 	},
 	"RGBA_255_255_255_255": {
@@ -22,6 +37,16 @@
 	"default": {
 		"font": "Kenney_Mini",
 		"fontColor": "RGBA_255_255_255_255"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "Kenney_Thick",
+		"fontColor": "RGBA_255_255_255_255",
+		"downFontColor": "RGBA_255_172_68_255",
+		"overFontColor": "RGBA_247_189_151_255",
+		"focusedFontColor": "RGBA_247_189_151_255",
+		"pressedOffsetY": -1
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
