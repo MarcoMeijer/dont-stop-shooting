@@ -13,12 +13,13 @@ import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
     public enum DamageCause {
-        AMMO("You are out of ammo!"),
-        LEFT_WALL("You were too slow!"),
-        BAT("You caught COVID-19!"),
-        EXPLOSION("You exploded!");
+        AMMO("You are out of ammo"),
+        LEFT_WALL("You were too slow"),
+        BAT("You caught COVID-19 from a bat"),
+        EXPLOSION("You exploded"),
+        CRYSTAL("You stabbed yourself in a crystal");
 
-        final String deathMessage;
+        public final String deathMessage;
 
         DamageCause(String msg) {
             this.deathMessage = msg;
@@ -34,6 +35,7 @@ public class Player extends PhysicsEntity implements Explosive {
     public int health;
     public int score;
     public int bullets = 200;
+    public DamageCause deathCause;
     private float invincibility = 0.0f;
     private static final float maxInvincibility = 3.0f;
 
@@ -134,7 +136,7 @@ public class Player extends PhysicsEntity implements Explosive {
     }
 
     public void kill(DamageCause cause) {
-        System.out.println(cause.deathMessage);
+        deathCause = cause;
         destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
         Sounds.gameOver.play();

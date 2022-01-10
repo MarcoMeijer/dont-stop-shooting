@@ -46,7 +46,7 @@ public abstract class PhysicsEntity extends Entity {
         if (!screen.collisionCheck(hitBox)) {
             location.add(dx.x, 0);
             if (screen.isDeadly(hitBox) && this instanceof Player) {
-                ((Player) this).takeDamage();
+                ((Player) this).takeDamage(Player.DamageCause.CRYSTAL);
             }
             if (screen.collisionCheck(hitBox)) {
                 location.add(-dx.x, 0);
@@ -63,7 +63,7 @@ public abstract class PhysicsEntity extends Entity {
         if (!screen.collisionCheck(hitBox)) {
             location.add(0, dx.y);
             if (screen.isDeadly(hitBox) && this instanceof Player) {
-                ((Player) this).takeDamage();
+                ((Player) this).takeDamage(Player.DamageCause.CRYSTAL);
             }
             if (screen.collisionCheck(hitBox)) {
                 location.add(0, -dx.y);

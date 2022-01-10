@@ -18,7 +18,10 @@ public class GameOverUI extends Table {
 
         Image gameOver = new Image(GameScreen.atlas.findRegion("gameover"));
         this.row();
-        this.add(gameOver).size(gameOver.getWidth()*2.0f, gameOver.getHeight()*2.0f);
+        this.add(gameOver).size(gameOver.getWidth()*2.0f, gameOver.getHeight()*2.0f).pad(20);
+
+        this.row();
+        this.add(new Label(screen.player.deathCause.deathMessage, skin, "big")).pad(20.0f);
 
         this.row();
         this.add(new Label("Your score is "+screen.player.score, skin, "big"));
@@ -49,7 +52,7 @@ public class GameOverUI extends Table {
         });
 
         this.row();
-        this.add(buttons).center().pad(60);
+        this.add(buttons).center().pad(30);
 
     }
 }
