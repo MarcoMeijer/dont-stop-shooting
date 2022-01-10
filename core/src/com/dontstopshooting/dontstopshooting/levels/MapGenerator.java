@@ -43,6 +43,13 @@ public class MapGenerator {
         return false;
     }
 
+    public boolean isDeadly(HitBox hitBox) {
+        for (LevelMap level : levels)
+            if (level.isDeadly(hitBox))
+                return true;
+        return false;
+    }
+
     public void onHit(GridPoint2 point) {
         for (LevelMap level : levels)
             level.onHit(point);
