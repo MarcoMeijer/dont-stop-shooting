@@ -224,9 +224,11 @@ public class GameScreen implements Screen {
             BackgroundMusic.setMute(musicMute);
         }
         BackgroundMusic.setMute(musicMute || player.health == 0);
+        BackgroundMusic.update();
 
         ui.update();
 
+        // rendering
         ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
         batch.begin();
 
@@ -261,12 +263,11 @@ public class GameScreen implements Screen {
         stage.act(delta);
         stage.draw();
         debugUi.update();
-
-        BackgroundMusic.update();
     }
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
