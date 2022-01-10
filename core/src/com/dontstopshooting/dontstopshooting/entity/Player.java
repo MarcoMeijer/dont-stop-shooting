@@ -12,6 +12,19 @@ import com.dontstopshooting.dontstopshooting.Sounds;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 
 public class Player extends PhysicsEntity implements Explosive {
+    public enum DamageCause {
+        AMMO("You are out of ammo!"),
+        LEFT_WALL("You were too slow!"),
+        BAT("You caught COVID-19!"),
+        EXPLOSION("You exploded!");
+
+        final String deathMessage;
+
+        DamageCause(String msg) {
+            this.deathMessage = msg;
+        }
+    }
+
     public static final float bulletPushAcc = 22;
     private float rpm = 480;
 
@@ -43,7 +56,7 @@ public class Player extends PhysicsEntity implements Explosive {
         score += 10;
         bullets--;
         if (bullets == 0) {
-            kill();
+            kill(DamageCause.AMMO);
         }
     }
 
@@ -105,22 +118,23 @@ public class Player extends PhysicsEntity implements Explosive {
 
     @Override
     public void onExplode() {
-        takeDamage();
+        takeDamage(DamageCause.EXPLOSION);
     }
 
-    public void takeDamage() {
+    public void takeDamage(DamageCause cause) {
         if (invincibility > 0.0f) {
             return;
         }
         this.health--;
         if (this.health == 0) {
-            kill();
+            kill(cause);
         }
         health = Math.max(health, 0);
         invincibility = maxInvincibility;
     }
 
-    public void kill() {
+    public void kill(DamageCause cause) {
+        System.out.println(cause.deathMessage);
         destroy();
         GameScreen.particles.createExplosion(location.x, location.y);
         Sounds.gameOver.play();

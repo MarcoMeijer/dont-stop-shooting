@@ -114,6 +114,6 @@ public class Bat extends PhysicsEntity implements Explosive, BulletHittable, Pla
 
     @Override
     public void onCollide(Player player) {
-        player.takeDamage();
+        player.takeDamage(Player.DamageCause.BAT);
     }
 }
