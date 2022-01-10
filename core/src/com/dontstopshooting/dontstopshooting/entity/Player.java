@@ -128,8 +128,11 @@ public class Player extends PhysicsEntity implements Explosive {
             return;
         }
         this.health--;
+        screen.playerCamera.shake(8.0f);
         if (this.health == 0) {
             kill(cause);
+        } else {
+            Sounds.hurt.play();
         }
         health = Math.max(health, 0);
         invincibility = maxInvincibility;
