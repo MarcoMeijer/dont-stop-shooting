@@ -226,7 +226,7 @@ public class GameScreen implements Screen {
         BackgroundMusic.setMute(musicMute || player.health == 0);
         BackgroundMusic.update();
 
-        ui.update();
+        ui.update(delta);
 
         // rendering
         ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
