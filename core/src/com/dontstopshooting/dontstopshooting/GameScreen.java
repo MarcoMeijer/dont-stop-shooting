@@ -288,6 +288,9 @@ public class GameScreen implements Screen {
     }
 
     public void restart() {
+        for (Entity e : entities) {
+            e.onDespawn();
+        }
         entities.clear();
         if (player != null && player.score > highScore) highScore = player.score;
         newEntities.clear();

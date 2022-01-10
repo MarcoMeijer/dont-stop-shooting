@@ -53,5 +53,5 @@ public class Sounds {
     public static final SoundEffect gun         = new SoundEffect("gunShot", 0.1f);
     public static final SoundEffect fuse        = new SoundEffect("fuse", 0.3f);
     public static final SoundEffect explosion   = new SoundEffect("explosion", 0.65f);
-    public static final SoundEffect wood        = new SoundEffect(new String[]{"wood1", "wood2", "wood3", "wood4", "wood5", "wood6"}, 0.3f);
+    public static final SoundEffect wood        = new SoundEffect(new String[]{"wood1", "wood2", "wood3", "wood4", "wood5", "wood6"}, 0.25f);
 }
