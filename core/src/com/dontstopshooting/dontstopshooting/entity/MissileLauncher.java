@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dontstopshooting.dontstopshooting.GameScreen;
 
 public class MissileLauncher extends Entity implements BulletHittable {
-    public static final int spawnFrequency = (int) (GameScreen.TPS * 5);
+    public static final int spawnFrequency = (int) (GameScreen.TPS * 7);
     private final Player target;
     private int age = spawnFrequency/2;
     private final TextureRegion sprite;

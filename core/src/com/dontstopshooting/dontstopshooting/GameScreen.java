@@ -37,8 +37,8 @@ public class GameScreen implements Screen {
     public final static Skin skin;
     public MapGenerator mapGenerator;
 
-    public static final float spawnRadius = 250;
-    public static final float despawnRadius = 300;
+    public static final float spawnRadius = 200;
+    public static final float despawnRadius = 250;
 
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
