@@ -7,6 +7,16 @@
   },
   {
     "levels": [
+      "level5-b",
+      "level5-c",
+      "level5-d",
+      "level5-e",
+      "level5-f"
+    ],
+    "repeat": [5,5]
+  },
+  {
+    "levels": [
       "level2-a",
       "level2-a-flipped",
       "level2-b",

@@ -37,8 +37,8 @@ public class GameScreen implements Screen {
     public final static Skin skin;
     public MapGenerator mapGenerator;
 
-    public static final float spawnRadius = 250;
-    public static final float despawnRadius = 300;
+    public static final float spawnRadius = 200;
+    public static final float despawnRadius = 250;
 
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
@@ -289,6 +289,9 @@ public class GameScreen implements Screen {
     }
 
     public void restart() {
+        for (Entity e : entities) {
+            e.onDespawn();
+        }
         entities.clear();
         if (player != null && player.score > highScore) highScore = player.score;
         newEntities.clear();
