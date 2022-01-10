@@ -28,7 +28,7 @@ public class MenuUI extends Table {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen());
+                game.setScreen(new GameScreen(game));
             }
         });
 
@@ -39,6 +39,12 @@ public class MenuUI extends Table {
         TextButton quitButton = new TextButton("Quit", this.getSkin());
         buttons.row();
         buttons.add(quitButton);
+        quitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.exit(0);
+            }
+        });
 
         this.row();
         this.add(logo).size(logo.getWidth()*2.0f, logo.getHeight()*2.0f);

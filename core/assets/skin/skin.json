@@ -37,6 +37,13 @@
 	"default": {
 		"font": "Kenney_Mini",
 		"fontColor": "RGBA_255_255_255_255"
+	},
+	"big": {
+		"font": "Kenney_Thick"
+	},
+	"highscore": {
+		"font": "Kenney_Thick",
+		"fontColor": "RGBA_255_172_68_255"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {

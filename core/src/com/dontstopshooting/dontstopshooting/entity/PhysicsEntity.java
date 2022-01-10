@@ -45,6 +45,9 @@ public abstract class PhysicsEntity extends Entity {
         // move in x direction
         if (!screen.collisionCheck(hitBox)) {
             location.add(dx.x, 0);
+            if (screen.isDeadly(hitBox) && this instanceof Player) {
+                ((Player) this).takeDamage(Player.DamageCause.CRYSTAL);
+            }
             if (screen.collisionCheck(hitBox)) {
                 location.add(-dx.x, 0);
                 while (!screen.collisionCheck(hitBox)) {
@@ -59,6 +62,9 @@ public abstract class PhysicsEntity extends Entity {
         // move in y direction
         if (!screen.collisionCheck(hitBox)) {
             location.add(0, dx.y);
+            if (screen.isDeadly(hitBox) && this instanceof Player) {
+                ((Player) this).takeDamage(Player.DamageCause.CRYSTAL);
+            }
             if (screen.collisionCheck(hitBox)) {
                 location.add(0, -dx.y);
                 while (!screen.collisionCheck(hitBox)) {

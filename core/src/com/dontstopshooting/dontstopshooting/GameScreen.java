@@ -1,5 +1,6 @@
 package com.dontstopshooting.dontstopshooting;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dontstopshooting.dontstopshooting.entity.*;
 import com.dontstopshooting.dontstopshooting.levels.MapGenerator;
 import com.dontstopshooting.dontstopshooting.ui.DebugUI;
+import com.dontstopshooting.dontstopshooting.ui.GameOverUI;
 import com.dontstopshooting.dontstopshooting.ui.GameUi;
 import com.dontstopshooting.dontstopshooting.utils.HitBox;
 import com.dontstopshooting.dontstopshooting.utils.ParticleHandler;
@@ -68,7 +70,7 @@ public class GameScreen implements Screen {
     public boolean keyboardControls = false;
 
     static {
-        PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 2, true);
+        PixmapPacker packer = new PixmapPacker(2024, 1024, Pixmap.Format.RGBA8888, 2, true);
         packer.pack("player", new Pixmap(Gdx.files.internal("player.png")));
         packer.pack("player1", new Pixmap(Gdx.files.internal("player1.png")));
         packer.pack("player2", new Pixmap(Gdx.files.internal("player2.png")));
@@ -109,6 +111,7 @@ public class GameScreen implements Screen {
         packer.pack("missile", new Pixmap(Gdx.files.internal("missile.png")));
         packer.pack("launcher", new Pixmap(Gdx.files.internal("launcher.png")));
         packer.pack("logo", new Pixmap(Gdx.files.internal("logo.png")));
+        packer.pack("gameover", new Pixmap(Gdx.files.internal("gameover.png")));
         atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         particles = new ParticleHandler();
@@ -118,7 +121,8 @@ public class GameScreen implements Screen {
         }
     }
 
-    public GameScreen() {
+    public GameScreen(Game game) {
+        this.game = game;
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, gameWidth, gameHeight, false);
         screenCamera = new OrthographicCamera();
         screenCamera.setToOrtho(false, gameWidth, gameHeight);
@@ -131,6 +135,7 @@ public class GameScreen implements Screen {
         stage.addActor(debugUi);
         stage.addActor(ui);
         batch = new SpriteBatch();
+        Gdx.input.setInputProcessor(stage);
         restart();
     }
 
@@ -140,6 +145,10 @@ public class GameScreen implements Screen {
 
     public boolean collisionCheck(HitBox hitBox) {
         return mapGenerator.collisionCheck(hitBox);
+    }
+
+    public boolean isDeadly(HitBox hitBox) {
+        return mapGenerator.isDeadly(hitBox);
     }
 
     public void createPoints(Vector2 location, int amount) {
@@ -226,6 +235,11 @@ public class GameScreen implements Screen {
         BackgroundMusic.setMute(musicMute || player.health == 0);
         BackgroundMusic.update();
 
+        if (player.health == 0 && gameOverUI == null) {
+            gameOverUI = new GameOverUI(skin, this);
+            stage.addActor(gameOverUI);
+        }
+
         ui.update(delta);
 
         // rendering
@@ -304,5 +318,10 @@ public class GameScreen implements Screen {
         ui.player = player;
         BackgroundMusic.begin();
         BackgroundMusic.setMute(musicMute);
+
+        if (gameOverUI != null) {
+            gameOverUI.remove();
+            gameOverUI = null;
+        }
     }
 }
