@@ -33,7 +33,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     private int preJumpTimer = -1;
     private State state = State.WALKING;
     private boolean direction;
-    private Sounds.SoundEffect.SoundID sound;
+    private Sounds.SoundEffect.SoundID sound = null;
 
     public Bomb(GameScreen screen, Vector2 location) {
         super(screen, location);
@@ -57,9 +57,14 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
         velocity.set(direction? speed: -speed, 0);
     }
 
+    @Override
+    public void onDespawn() {
+        super.onDespawn();
+        if (sound != null) Sounds.fuse.stop(sound);
+    }
+
     public void explode() {
         destroy();
-        Sounds.fuse.stop(sound);
         screen.explosion(hitBox.getCenter(), explosionRadius, 20000);
         if (velocity.y < -0.1f) {
             screen.createPoints(hitBox.getCenter(), 2000);

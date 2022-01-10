@@ -21,13 +21,17 @@ public abstract class Entity {
     public void onSpawn() {
     }
 
+    public void onDespawn() {
+    }
+
     public abstract void tick();
 
     public void render(SpriteBatch batch) {
         if (screen.hitBoxes) hitBox.render(batch);
     }
 
-    public void destroy() {
+    public final void destroy() {
         screen.oldEntities.add(this);
+        onDespawn();
     }
 }
