@@ -15,7 +15,7 @@
       "level2-d",
       "level2-e"
     ],
-    "repeat": [3,5]
+    "repeat": [2,5]
   },
   {
     "levels": [
@@ -23,14 +23,31 @@
       "level3-b",
       "level3-b-flipped"
     ],
-    "repeat": [2,4]
+    "repeat": [1,2]
   },
   {
     "levels": [
       "level4-a",
-      "level4-b"
+      "level4-b",
+      "level4-c",
+      "level4-d",
+      "level4-e"
     ],
-    "repeat": [5,10]
+    "repeat": [5,8]
+  },
+  {
+    "levels": [
+      "level5-a",
+      "level5-b",
+      "level5-c",
+      "level5-d",
+      "level5-e",
+      "level5-f",
+      "level4-c",
+      "level4-d",
+      "level4-e"
+    ],
+    "repeat": [8,16]
   },
   {
     "levels": [

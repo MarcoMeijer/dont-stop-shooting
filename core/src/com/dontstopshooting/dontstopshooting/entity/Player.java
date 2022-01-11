@@ -18,6 +18,7 @@ public class Player extends PhysicsEntity implements Explosive {
         LEFT_WALL("You were too slow"),
         BAT("You caught COVID-19 from a bat"),
         EXPLOSION("You exploded"),
+        DESPAWN("You vanished"),
         CRYSTAL("You stabbed yourself in a crystal");
 
         public final String deathMessage;
@@ -141,9 +142,15 @@ public class Player extends PhysicsEntity implements Explosive {
         invincibility = maxInvincibility;
     }
 
+    @Override
+    public void onDespawn() {
+        super.onDespawn();
+        kill(DamageCause.DESPAWN);
+    }
+
     public void kill(DamageCause cause) {
-        deathCause = cause;
         destroy();
+        deathCause = cause;
         GameScreen.particles.createExplosion(location.x, location.y);
         Sounds.gameOver.play();
         this.health = 0;

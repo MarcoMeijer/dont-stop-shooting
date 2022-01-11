@@ -11,6 +11,8 @@ public abstract class Entity {
     public Vector2 location;
     public final HitBox hitBox;
 
+    private boolean destructed = false;
+
     public Entity(GameScreen screen, Vector2 location) {
         screen.newEntities.add(this);
         this.screen = screen;
@@ -31,6 +33,8 @@ public abstract class Entity {
     }
 
     public final void destroy() {
+        if (destructed) return;
+        destructed = true;
         screen.oldEntities.add(this);
         onDespawn();
     }

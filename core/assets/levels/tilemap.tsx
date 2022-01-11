@@ -258,6 +258,7 @@
   <properties>
    <property name="collision" type="bool" value="false"/>
    <property name="deadly" type="bool" value="false"/>
+   <property name="entity" value="heart"/>
   </properties>
  </tile>
  <tile id="41">

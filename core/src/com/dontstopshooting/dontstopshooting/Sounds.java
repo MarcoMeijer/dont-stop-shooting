@@ -56,6 +56,7 @@ public class Sounds {
     public static final SoundEffect batDamage       = new SoundEffect("batDamage", 0.8f);
     public static final SoundEffect batDie          = new SoundEffect("batDie", 0.8f);
     public static final SoundEffect bulletPickUp    = new SoundEffect("bulletPickUp", 0.3f);
+    public static final SoundEffect heartPickup     = new SoundEffect("heart", 1f);
     public static final SoundEffect gameOver        = new SoundEffect("gameOver", 0.3f);
     public static final SoundEffect hurt            = new SoundEffect("hurt", 1.7f);
     public static final SoundEffect wood            = new SoundEffect(new String[]{"wood1", "wood2", "wood3", "wood4", "wood5", "wood6"}, 0.20f);

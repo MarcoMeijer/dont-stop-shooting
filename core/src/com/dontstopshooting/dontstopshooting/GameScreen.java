@@ -39,8 +39,8 @@ public class GameScreen implements Screen {
     public final static Skin skin;
     public MapGenerator mapGenerator;
 
-    public static final float spawnRadius = 200;
-    public static final float despawnRadius = 250;
+    public static final float spawnRadius = 250;
+    public static final float despawnRadius = 300;
 
     private final FrameBuffer frameBuffer;
     private final Viewport viewport;
@@ -66,7 +66,6 @@ public class GameScreen implements Screen {
     public SpriteBatch batch;
     public int highScore = 0;
 
-    public boolean musicMute = false;
     public boolean keyboardControls = false;
     public Game game;
     public GameOverUI gameOverUI;
@@ -104,7 +103,6 @@ public class GameScreen implements Screen {
         packer.pack("caves2", new Pixmap(Gdx.files.internal("caves2.png")));
         packer.pack("caves3", new Pixmap(Gdx.files.internal("caves3.png")));
         packer.pack("heart", new Pixmap(Gdx.files.internal("heart.png")));
-        packer.pack("heartempty", new Pixmap(Gdx.files.internal("heartempty.png")));
         packer.pack("healthbar0", new Pixmap(Gdx.files.internal("healthbar0.png")));
         packer.pack("healthbar1", new Pixmap(Gdx.files.internal("healthbar1.png")));
         packer.pack("healthbar2", new Pixmap(Gdx.files.internal("healthbar2.png")));
@@ -222,6 +220,9 @@ public class GameScreen implements Screen {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             }
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            BackgroundMusic.muteMusic = !BackgroundMusic.muteMusic;
+        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) restart();
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             debugMode = !debugMode;
@@ -230,12 +231,7 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
             hitBoxes = !hitBoxes;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            musicMute = !musicMute;
-            BackgroundMusic.setMute(musicMute);
-        }
-        BackgroundMusic.setMute(musicMute || player.health == 0);
-        BackgroundMusic.update();
+        BackgroundMusic.update(player.health == 0);
 
         if (player.health == 0 && gameOverUI == null) {
             gameOverUI = new GameOverUI(skin, this);
@@ -319,7 +315,6 @@ public class GameScreen implements Screen {
         camera = playerCamera.camera;
         ui.player = player;
         BackgroundMusic.begin();
-        BackgroundMusic.setMute(musicMute);
 
         if (gameOverUI != null) {
             gameOverUI.remove();

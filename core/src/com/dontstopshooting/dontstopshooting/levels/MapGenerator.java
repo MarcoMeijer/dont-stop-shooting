@@ -103,6 +103,10 @@ public class MapGenerator {
                         new MissileLauncher(screen, new Vector2(offset + x*16.0f, y*16.0f));
                         cell.setTile(null);
                     }
+                    if (entityName.equals("heart")) {
+                        new HeartPowerUp(screen, new Vector2(offset + x*16.0f, y*16.0f));
+                        cell.setTile(null);
+                    }
                 }
             }
         }

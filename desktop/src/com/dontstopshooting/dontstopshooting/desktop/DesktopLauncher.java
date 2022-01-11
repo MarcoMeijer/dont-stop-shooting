@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.foregroundFPS = 144;
 		//config.fullscreen = true;
-		config.title = "Don't stop shooting";
+		config.title = "Don't Stop Shooting";
 		new LwjglApplication(new MyGame(), config);
 	}
 }

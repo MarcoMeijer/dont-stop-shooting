@@ -2,6 +2,7 @@ package com.dontstopshooting.dontstopshooting;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,7 +37,17 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        BackgroundMusic.setMute(false);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F11)) {
+            if (Gdx.graphics.isFullscreen()) {
+                Gdx.graphics.setWindowedMode(1280, 720);
+            } else {
+                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+            }
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            BackgroundMusic.muteMusic = !BackgroundMusic.muteMusic;
+        }
+        BackgroundMusic.update(false);
         camX += 32.0f*delta;
         ScreenUtils.clear(56f / 255, 45f / 255, 107f / 255, 1.0f);
         batch.setProjectionMatrix(screenCamera.combined);
