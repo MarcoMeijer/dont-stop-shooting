@@ -119,7 +119,7 @@ public class Bomb extends PhysicsEntity implements BulletHittable, Explosive {
     public void render(SpriteBatch batch) {
         super.render(batch);
 
-        time += Gdx.graphics.getDeltaTime(); // todo modulo
+        time += Gdx.graphics.getDeltaTime();
         int x = (int)location.x, y = (int)location.y;
 
         TextureRegion texture = null;
